@@ -5,6 +5,9 @@
 	"version": "0.0.1",
 	"publisher": "ZouXL",
 	"icon": "icon/logo.png",
+	"repository": {
+		"url": "https://github.com/zouxiaoliang/c-and-cpp-creator.git"
+	},
 	"engines": {
 		"vscode": "^1.64.0"
 	},
