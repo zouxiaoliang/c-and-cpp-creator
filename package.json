@@ -1,0 +1,186 @@
+{
+  "name": "c-and-cpp-creator",
+	"displayName": "C&C++ Creator",
+	"description": "This is a c&cpp creator extension for vscode.",
+	"version": "0.0.1",
+	"publisher": "ZouXL",
+	"icon": "icon/logo.png",
+	"engines": {
+		"vscode": "^1.64.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+        "onCommand:c-and-cpp-creator.helloWorld",
+		"onCommand:c-and-cpp-creator.createSourceFile",
+		"onCommand:c-and-cpp-creator.createHeaderFile",
+		"onCommand:c-and-cpp-creator.createClass",
+		"onCommand:c-and-cpp-creator.createMainForCpp",
+		"onCommand:c-and-cpp-creator.createMainForC"
+	],
+	"main": "./dist/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "c-and-cpp-creator.helloWorld",
+				"title": "Hello World",
+				"category": "C&CPP Creator"
+			},
+			{
+				"command": "c-and-cpp-creator.createSourceFile",
+				"title": "Create Source File",
+				"category": "C&CPP Creator"
+			},
+			{
+				"command": "c-and-cpp-creator.createHeaderFile",
+				"title": "Create Header File",
+				"category": "C&CPP Creator"
+			},
+			{
+				"command": "c-and-cpp-creator.createClass",
+				"title": "Create Class",
+				"category": "C&CPP Creator"
+			},
+			{
+				"command": "c-and-cpp-creator.createMainForCpp",
+				"title": "Create Cpp Main",
+				"category": "C&CPP Creator"
+			},
+			{
+				"command": "c-and-cpp-creator.createMainForC",
+				"title": "Create C Main",
+				"category": "C&CPP Creator"
+			}
+		],
+		"menus": {
+			"explorer/context": [
+				{
+					"submenu": "creator.file",
+					"group": "navigation"
+				}
+			],
+			"creator.file": [
+				{
+					"command": "c-and-cpp-creator.createSourceFile"
+				},
+				{
+					"command": "c-and-cpp-creator.createHeaderFile"
+				},
+				{
+					"command": "c-and-cpp-creator.createClass"
+				},
+				{
+					"command": "c-and-cpp-creator.createMainForCpp"
+				},
+				{
+					"command": "c-and-cpp-creator.createMainForC"
+				},
+				{
+					"command": "c-and-cpp-creator.helloWorld"
+				}
+			]
+		},
+		"submenus": [
+			{
+				"id": "creator.file",
+				"label": "New C & C++ ..."
+			}
+		],
+		"languages": [
+			{
+				"id": "cpp",
+				"extensions": [
+					".cpp",
+					".hpp",
+					".cc",
+					".h"
+				]
+			}
+		],
+		"configuration": [
+			{
+				"title": "C&C++ Creator",
+				"properties": {
+					"cpp.creator.template.class.h": {
+						"type": "string",
+						"default": "",
+						"description": "Class Header File Template Path."
+					},
+					"cpp.creator.template.class.cpp": {
+						"type": "string",
+						"default": "",
+						"description": "Class Source File Template Path."
+					},
+					"cpp.creator.template.header": {
+						"type": "string",
+						"default": "",
+						"description": "General Header File Template Path."
+					},
+					"cpp.creator.template.source": {
+						"type": "string",
+						"default": "",
+						"description": "General Source File Template Path."
+					},
+					"cpp.creator.template.class.filename.header": {
+						"type": "string",
+						"default": "{{\\*CLASSNAME\\*}}.h",
+						"description": "Class Header Filename Template, default: {{\\*CLASSNAME\\*}}.h."
+					},
+					"cpp.creator.template.class.filename.source": {
+						"type": "string",
+						"default": "{{\\*CLASSNAME\\*}}.cpp",
+						"description": "Class Source Filename Template, default: {{\\*CLASSNAME\\*}}.cpp."
+					},
+					"cpp.creator.template.license": {
+						"type": "string",
+						"default": "",
+						"description": "License Template Path."
+					},
+					"cpp.creator.template.username": {
+						"type": "string",
+						"default": "zouxiaoliang",
+						"description": "Your Name."
+					},
+					"cpp.creator.template.main.c": {
+						"type": "string",
+						"default": "",
+						"description": "General C Main File."
+					},
+					"cpp.creator.template.main.cpp": {
+						"type": "string",
+						"default": "",
+						"description": "General CPP Main File."
+					}
+				}
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run package",
+		"compile": "webpack",
+		"watch": "webpack --watch",
+		"package": "webpack --mode production --devtool hidden-source-map",
+		"compile-tests": "tsc -p . --outDir out",
+		"watch-tests": "tsc -p . -w --outDir out",
+		"pretest": "npm run compile-tests && npm run compile && npm run lint",
+		"lint": "eslint src --ext ts",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.64.0",
+		"@types/glob": "^7.2.0",
+		"@types/mocha": "^9.1.0",
+		"@types/node": "14.x",
+		"@typescript-eslint/eslint-plugin": "^5.12.1",
+		"@typescript-eslint/parser": "^5.12.1",
+		"eslint": "^8.9.0",
+		"glob": "^7.2.0",
+		"mocha": "^9.2.1",
+		"typescript": "^4.5.5",
+		"ts-loader": "^9.2.6",
+		"webpack": "^5.69.1",
+		"webpack-cli": "^4.9.2",
+		"@vscode/test-electron": "^2.1.2"
+	}
+}
