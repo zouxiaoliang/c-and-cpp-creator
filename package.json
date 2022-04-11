@@ -2,11 +2,11 @@
   "name": "c-and-cpp-creator",
 	"displayName": "C&C++ Creator",
 	"description": "This is a c&cpp creator extension for vscode.",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"publisher": "ZouXL",
 	"icon": "icon/logo.png",
 	"repository": {
-		"url": "https://github.com/zouxiaoliang/c-and-cpp-creator.git"
+		"url": "https://github.com/zouxiaoliang/c_cpp.creator.git"
 	},
 	"engines": {
 		"vscode": "^1.64.0"
@@ -15,78 +15,127 @@
 		"Other"
 	],
 	"activationEvents": [
-        "onCommand:c-and-cpp-creator.helloWorld",
-		"onCommand:c-and-cpp-creator.createSourceFile",
-		"onCommand:c-and-cpp-creator.createHeaderFile",
-		"onCommand:c-and-cpp-creator.createClass",
-		"onCommand:c-and-cpp-creator.createMainForCpp",
-		"onCommand:c-and-cpp-creator.createMainForC"
+        "onCommand:c_cpp.creator.helloWorld",
+		"onCommand:c_cpp.creator.createSourceFile",
+		"onCommand:c_cpp.creator.createHeaderFile",
+		"onCommand:c_cpp.creator.createClass",
+		"onCommand:c_cpp.creator.createMainForCpp",
+		"onCommand:c_cpp.creator.createMainForC",
+		"onCommand:c_cpp.creator.createProjectC",
+		"onCommand:c_cpp.creator.createProjectCpp"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "c-and-cpp-creator.helloWorld",
+				"command": "c_cpp.creator.helloWorld",
 				"title": "Hello World",
 				"category": "C&CPP Creator"
 			},
 			{
-				"command": "c-and-cpp-creator.createSourceFile",
+				"command": "c_cpp.creator.createSourceFile",
 				"title": "Create Source File",
 				"category": "C&CPP Creator"
 			},
 			{
-				"command": "c-and-cpp-creator.createHeaderFile",
+				"command": "c_cpp.creator.createHeaderFile",
 				"title": "Create Header File",
 				"category": "C&CPP Creator"
 			},
 			{
-				"command": "c-and-cpp-creator.createClass",
+				"command": "c_cpp.creator.createClass",
 				"title": "Create Class",
 				"category": "C&CPP Creator"
 			},
 			{
-				"command": "c-and-cpp-creator.createMainForCpp",
+				"command": "c_cpp.creator.createMainForCpp",
 				"title": "Create Cpp Main",
 				"category": "C&CPP Creator"
 			},
 			{
-				"command": "c-and-cpp-creator.createMainForC",
+				"command": "c_cpp.creator.createMainForC",
 				"title": "Create C Main",
 				"category": "C&CPP Creator"
+			},
+			{
+				"command": "c_cpp.creator.createProjectCpp",
+				"title": "Create Cpp Project",
+				"cetegory": "C&CPP Creator"
+			},
+			{
+				"command": "c_cpp.creator.createProjectC",
+				"title": "Create C Project",
+				"cetegory": "C&CPP Creator"
 			}
 		],
 		"menus": {
 			"explorer/context": [
 				{
-					"submenu": "creator.file",
+					"submenu": "c_cpp.creator.file",
 					"group": "navigation"
+				},
+				{
+					"command": "c_cpp.creator.createProjectCpp",
+					"group": "navigation@100"
 				}
 			],
-			"creator.file": [
+			"file/newFile": [
 				{
-					"command": "c-and-cpp-creator.createSourceFile"
+					"command": "c_cpp.creator.createProjectC"
 				},
 				{
-					"command": "c-and-cpp-creator.createHeaderFile"
+					"command": "c_cpp.creator.createProjectCpp"
 				},
 				{
-					"command": "c-and-cpp-creator.createClass"
+					"command": "c_cpp.creator.createSourceFile"
 				},
 				{
-					"command": "c-and-cpp-creator.createMainForCpp"
+					"command": "c_cpp.creator.createHeaderFile"
 				},
 				{
-					"command": "c-and-cpp-creator.createMainForC"
+					"command": "c_cpp.creator.createClass"
 				},
 				{
-					"command": "c-and-cpp-creator.helloWorld"
+					"command": "c_cpp.creator.createMainForCpp"
+				},
+				{
+					"command": "c_cpp.creator.createMainForC"
+				},
+				{
+					"command": "c_cpp.creator.helloWorld"
+				}
+			],
+			"c_cpp.creator.file": [
+				{
+					"command": "c_cpp.creator.createSourceFile"
+				},
+				{
+					"command": "c_cpp.creator.createHeaderFile"
+				},
+				{
+					"command": "c_cpp.creator.createClass"
+				},
+				{
+					"command": "c_cpp.creator.createMainForCpp"
+				},
+				{
+					"command": "c_cpp.creator.createMainForC"
+				},
+				{
+					"command": "c_cpp.creator.helloWorld"
 				}
 			]
 		},
+		"viewsWelcome": [
+			{
+				"view": "explorer",
+				"contents": "You can also [open a CMake project folder](command:_java.project.open), or create a new CMake project by clicking the button below.\n[Create CMake C Project](command:c_cpp.creator.createProjectC)\n[Create CMake Cpp Project](command:c_cpp.creator.createProjectCpp)",
+				"when": "workspaceFolderCount == 0"
+			}
+		],
 		"submenus": [
 			{
-				"id": "creator.file",
+				"id": "c_cpp.creator.file",
 				"label": "New C & C++ ..."
 			}
 		],
@@ -105,55 +154,70 @@
 			{
 				"title": "C&C++ Creator",
 				"properties": {
-					"cpp.creator.template.class.h": {
+					"c_cpp.creator.template.class.h": {
 						"type": "string",
 						"default": "",
 						"description": "Class Header File Template Path."
 					},
-					"cpp.creator.template.class.cpp": {
+					"c_cpp.creator.template.class.cpp": {
 						"type": "string",
 						"default": "",
 						"description": "Class Source File Template Path."
 					},
-					"cpp.creator.template.header": {
+					"c_cpp.creator.template.header": {
 						"type": "string",
 						"default": "",
 						"description": "General Header File Template Path."
 					},
-					"cpp.creator.template.source": {
+					"c_cpp.creator.template.source": {
 						"type": "string",
 						"default": "",
 						"description": "General Source File Template Path."
 					},
-					"cpp.creator.template.class.filename.header": {
+					"c_cpp.creator.template.class.filename.header": {
 						"type": "string",
-						"default": "{{\\*CLASSNAME\\*}}.h",
-						"description": "Class Header Filename Template, default: {{\\*CLASSNAME\\*}}.h."
+						"default": "{{*CLASSNAME*}}.h",
+						"description": "Class Header Filename Template, default: {{*CLASSNAME*}}.h."
 					},
-					"cpp.creator.template.class.filename.source": {
+					"c_cpp.creator.template.class.filename.source": {
 						"type": "string",
-						"default": "{{\\*CLASSNAME\\*}}.cpp",
-						"description": "Class Source Filename Template, default: {{\\*CLASSNAME\\*}}.cpp."
+						"default": "{{*CLASSNAME*}}.cpp",
+						"description": "Class Source Filename Template, default: {{*CLASSNAME*}}.cpp."
 					},
-					"cpp.creator.template.license": {
+					"c_cpp.creator.template.license": {
 						"type": "string",
 						"default": "",
 						"description": "License Template Path."
 					},
-					"cpp.creator.template.username": {
+					"c_cpp.creator.template.username": {
 						"type": "string",
 						"default": "zouxiaoliang",
 						"description": "Your Name."
 					},
-					"cpp.creator.template.main.c": {
+					"c_cpp.creator.template.main.c": {
 						"type": "string",
 						"default": "",
 						"description": "General C Main File."
 					},
-					"cpp.creator.template.main.cpp": {
+					"c_cpp.creator.template.main.cpp": {
 						"type": "string",
 						"default": "",
 						"description": "General CPP Main File."
+					},
+					"c_cpp.creator.template.c.cmakelists.txt": {
+						"type": "string",
+						"default": "",
+						"description": "General CMake C Project File."
+					},
+					"c_cpp.creator.template.cpp.cmakelists.txt": {
+						"type": "string",
+						"default": "",
+						"description": "General CMake CPP Project File."
+					},
+					"c_cpp.creator.default_project_path": {
+						"type": "string",
+						"default": "",
+						"description": "Default Project Path"
 					}
 				}
 			}

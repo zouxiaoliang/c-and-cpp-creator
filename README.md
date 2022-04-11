@@ -3,6 +3,11 @@
 This is a c&cpp creator extension for vscode.
 
 ## Features
+* `v0.0.1` 创建 C++类
+* `v0.0.1` 创建 头文件
+* `v0.0.1` 创建 源文件
+* `v0.0.1` 自定义源文件/头文件/类文件模版，可以增加自定义license信息以及用户名
+* `v0.0.2` 创建cmake C/C++ 项目
 
 ### Macro
 
@@ -21,6 +26,10 @@ This is a c&cpp creator extension for vscode.
 | {{\*USER\*}} | 用户名 |
 | {{\*LICENSE\*}} | license信息 |
 | {{\*DATE\*}} | 文件创建时间 |
+| {{\*PROJECT_NAME_UPPER\*}} | 大写项目名 ｜
+| {{\*PROJECT_NAME_LOWER\*}} | 小写项目名 ｜
+| {{\*PROJECT_NAME_TITLE\*}} | 标题式项目名 ｜
+| {{\*PROJECT_NAME\*}} | 原始项目名 ｜
 
 ## Requirements
 
@@ -31,19 +40,19 @@ This extension contributes the following settings
 
 | Name | Type | Value |
 | ----- | ----- | ----- |
-| cpp.creator.template.class.h | path | default: empty |
-| cpp.creator.template.class.cpp | path | default: empty |
-| cpp.creator.template.header | path | default: empty |
-| cpp.creator.template.source | path | default: empty |
-| cpp.creator.template.class.filename.header | string | default: {{\*CLASSNAME\*}}.h |
-| cpp.creator.template.class.filename.source | string | default: {{\*CLASSNAME\*}}.cpp |
-| cpp.creator.template.license | string | default: empty |
-| cpp.creator.template.username | string | default: zouxiaoliang |
-| cpp.creator.template.main.c | path | default: empty |
-| cpp.creator.template.main.cpp | path | default: empty |
+| c_cpp.creator.template.class.h | path | default: empty |
+| c_cpp.creator.template.class.cpp | path | default: empty |
+| c_cpp.creator.template.header | path | default: empty |
+| c_cpp.creator.template.source | path | default: empty |
+| c_cpp.creator.template.class.filename.header | string | default: {{\*CLASSNAME\*}}.h |
+| c_cpp.creator.template.class.filename.source | string | default: {{\*CLASSNAME\*}}.cpp |
+| c_cpp.creator.template.license | string | default: empty |
+| c_cpp.creator.template.username | string | default: zouxiaoliang |
+| c_cpp.creator.template.main.c | path | default: empty |
+| c_cpp.creator.template.main.cpp | path | default: empty |
 
 ## Default Template
-* cpp.creator.template.class.h
+* c_cpp.creator.template.class.h
 ```
 {{*LICENSE*}}
 
@@ -62,7 +71,7 @@ private:
 #endif // {{*CLASSNAME_UPPER*}}_H
 ```
 
-* cpp.creator.template.class.cpp
+* c_cpp.creator.template.class.cpp
 ```
 {{*LICENSE*}}
 
@@ -77,7 +86,7 @@ private:
 }
 ```
 
-* cpp.creator.template.header
+* c_cpp.creator.template.header
 ```
 {{*LICENSE*}}
 
@@ -88,12 +97,12 @@ private:
 #endif // {{*FILENAME_UPPER*}}_H
 ```
 
-* cpp.creator.template.source
+* c_cpp.creator.template.source
 ```
 {{*LICENSE*}}
 ```
 
-* cpp.creator.template.license
+* c_cpp.creator.template.license
 ```
 /**
  * @author {{*USER*}}
@@ -102,7 +111,7 @@ private:
 
 ```
 
-* cpp.creator.template.main.c
+* c_cpp.creator.template.main.c
 ```
 {{*LICENSE*}}
 
@@ -113,7 +122,7 @@ void main() {
 }
 ```
 
-* cpp.creator.template.main.cpp
+* c_cpp.creator.template.main.cpp
 ```
 {{*LICENSE*}}
 

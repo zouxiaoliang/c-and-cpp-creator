@@ -1,0 +1,14 @@
+cmake_minimum_required(VERSION 3.5)
+
+project({{*PROJECT_NAME*}} LANGUAGES CXX C)
+
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+function(main)
+    set(MAIN_SOURCES main.cpp)
+    add_executable({{*PROJECT_NAME*}} ${MAIN_SOURCES})
+endfunction(Main)
+
+main()

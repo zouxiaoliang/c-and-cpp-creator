@@ -1,5 +1,7 @@
 import * as fs from 'fs';
 import path = require('path');
+import {config} from 'process';
+import * as vscode from 'vscode';
 import {Configs as configs} from './configs';
 
 type Token = {
@@ -22,6 +24,9 @@ export class Render {
   user: string = configs.username();
   licenseTemplate: string = configs.licenseTemplate();
 
+  cmakeProjectC = configs.cCmakeProjectTemplate();
+  cmakeProjectCpp = configs.cppCmakeProjectTemplate();
+
   upperPattern: RegExp = /{{\*CLASSNAME_UPPER\*}}/gi;
   lowerPattern: RegExp = /{{\*CLASSNAME_LOWER\*}}/gi;
   titlePattern: RegExp = /{{\*CLASSNAME_TIELE\*}}/gi;
@@ -39,6 +44,12 @@ export class Render {
   licensePattern: RegExp = /{{\*LICENSE\*}}/gi;
 
   datePattern: RegExp = /{{\*DATE\*}}/gi;
+
+  projectNamePattern: RegExp = /{{\*PROJECT_NAME\*}}/gi;
+  projectNameUpperPattern: RegExp = /{{\*PROJECT_NAME_UPPER\*}}/gi;
+  projectNameLowerPattern: RegExp = /{{\*PROJECT_NAME_LOWER\*}}/gi;
+  projectNameTitlePattern: RegExp = /{{\*PROJECT_NAME_TITLE\*}}/gi;
+
   today: string = '';
 
   constructor() {
@@ -49,8 +60,6 @@ export class Render {
 
     this.today = yyyy + '/' + mm + '/' + dd;
   }
-
-  generateClazz(clazzName: string) {}
 
   render(replacements: Array<Token>, executeOn: string) {
     replacements.forEach(elem => {
@@ -282,5 +291,78 @@ export class Render {
 
     var filepath = path.join(workspacePath, filename);
     return this.createFile(filepath, this.render(tokens, this.cppMainTemplate));
+  }
+
+  createProjectC(projectPath: string, projectName: string): [boolean, String] {
+    var projectNameNotSpace = projectName.trim().replace(' ', '_');
+    var tokens: Array<Token> = [
+      {pattern: this.projectNamePattern, value: projectNameNotSpace},
+      {
+        pattern: this.projectNameUpperPattern,
+        value: projectNameNotSpace.toUpperCase()
+      },
+      {
+        pattern: this.projectNameLowerPattern,
+        value: projectNameNotSpace.toLowerCase()
+      },
+      {
+        pattern: this.projectNameTitlePattern,
+        value: projectNameNotSpace.charAt(0).toUpperCase() +
+            projectNameNotSpace.substring(1).toLowerCase()
+      },
+      {pattern: this.userPattern, value: this.user},
+      {pattern: this.datePattern, value: this.today},
+    ];
+
+    var license: string = this.render(tokens, this.licenseTemplate);
+    tokens.push({pattern: this.licensePattern, value: license});
+
+    // create project director.
+    var dir = vscode.Uri.joinPath(vscode.Uri.file(projectPath), projectName);
+    this.createDir(dir.fsPath);
+
+    // create project failes, CMakeLists.txt main.c/main.cpp
+    this.createMainForCpp(dir.fsPath, 'main.c');
+    var cmake = vscode.Uri.joinPath(dir, 'CMakeLists.txt');
+    this.createFile(cmake.fsPath, this.render(tokens, this.cmakeProjectC));
+
+    return [true, dir.fsPath];
+  }
+
+  createProjectCpp(projectPath: string, projectName: string):
+      [boolean, String] {
+    var projectNameNotSpace = projectName.trim().replace(' ', '_');
+    var tokens: Array<Token> = [
+      {pattern: this.projectNamePattern, value: projectNameNotSpace},
+      {
+        pattern: this.projectNameUpperPattern,
+        value: projectNameNotSpace.toUpperCase()
+      },
+      {
+        pattern: this.projectNameLowerPattern,
+        value: projectNameNotSpace.toLowerCase()
+      },
+      {
+        pattern: this.projectNameTitlePattern,
+        value: projectNameNotSpace.charAt(0).toUpperCase() +
+            projectNameNotSpace.substring(1).toLowerCase()
+      },
+      {pattern: this.userPattern, value: this.user},
+      {pattern: this.datePattern, value: this.today},
+    ];
+
+    var license: string = this.render(tokens, this.licenseTemplate);
+    tokens.push({pattern: this.licensePattern, value: license});
+
+    // create project director.
+    var dir = vscode.Uri.joinPath(vscode.Uri.file(projectPath), projectName);
+    this.createDir(dir.fsPath);
+
+    // create project failes, CMakeLists.txt main.c/main.cpp
+    this.createMainForCpp(dir.fsPath, 'main.cpp');
+    var cmake = vscode.Uri.joinPath(dir, 'CMakeLists.txt');
+    this.createFile(cmake.fsPath, this.render(tokens, this.cmakeProjectCpp));
+
+    return [true, dir.fsPath];
   }
 }

@@ -1,6 +1,7 @@
 import {promises} from 'dns';
-import * as vscode from 'vscode';
 import * as fs from 'fs';
+import * as vscode from 'vscode';
+
 import path = require('path');
 
 export abstract class VscodeHelper {
@@ -34,8 +35,17 @@ export abstract class VscodeHelper {
     return await vscode.window.showInputBox(option);
   }
 
+  public static async inputProjectName(): Promise<string|undefined> {
+    var option: vscode.InputBoxOptions = {
+      ignoreFocusOut: false,
+      placeHolder: 'Give me you project name.',
+      prompt: 'Type a valid project name'
+    };
+    return await vscode.window.showInputBox(option);
+  }
+
   public static dirPath(args: any): string {
-    var dir: string = "";
+    var dir: string = '';
     if (1 === vscode.workspace.workspaceFolders?.length) {
       dir = vscode.workspace.workspaceFolders[0].uri.path;
     }
