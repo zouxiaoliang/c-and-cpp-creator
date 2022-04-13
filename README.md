@@ -1,4 +1,4 @@
-# A C& C++ Creator :ZouXL:
+# A C& C++ Creator :zouxiaoliang:
 
 This is a c&cpp creator extension for vscode.
 
