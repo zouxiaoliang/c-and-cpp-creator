@@ -11,11 +11,11 @@ This is a c&cpp creator extension for vscode.
 
 ### Macro
 
-| Name | description | 
+| Name | description |
 | ----- | ----- |
 | {{\*CLASSNAME_UPPER\*}} | 大写类名 |
 | {{\*CLASSNAME_LOWER\*}} | 小写类名 |
-| {{\*CLASSNAME_TIELE\*}} | 标题式类名 |
+| {{\*CLASSNAME_TITLE\*}} | 标题式类名 |
 | {{\*CLASSNAME\*}} | 原始类名 |
 | {{\*CLAZZ_HEADER_FILENAME\*}} | 类头文件名 |
 | {{\*CLAZZ_SOURCE_FILENAME\*}} | 类源文件名 |

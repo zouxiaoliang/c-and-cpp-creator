@@ -1,7 +1,8 @@
 out
 dist
 node_modules
+target
 .vscode-test/
-*.vsix
-package-lock.json
 .vscode-ctags
+package-lock.json
+*.vsix

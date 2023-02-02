@@ -1,8 +1,8 @@
 {
-  "name": "c-and-cpp-creator",
+	"name": "c-and-cpp-creator",
 	"displayName": "C&C++ Creator",
 	"description": "This is a c&cpp creator extension for vscode.",
-	"version": "0.0.2",
+	"version": "0.0.6",
 	"publisher": "zouxiaoliang",
 	"icon": "icon/logo.png",
 	"repository": {
@@ -15,14 +15,16 @@
 		"Other"
 	],
 	"activationEvents": [
-        "onCommand:c_cpp.creator.helloWorld",
+		"onCommand:c_cpp.creator.helloWorld",
 		"onCommand:c_cpp.creator.createSourceFile",
 		"onCommand:c_cpp.creator.createHeaderFile",
 		"onCommand:c_cpp.creator.createClass",
 		"onCommand:c_cpp.creator.createMainForCpp",
 		"onCommand:c_cpp.creator.createMainForC",
 		"onCommand:c_cpp.creator.createProjectC",
-		"onCommand:c_cpp.creator.createProjectCpp"
+		"onCommand:c_cpp.creator.createProjectCpp",
+		"onCommand:c_cpp.creator.createPythonFile",
+		"onCommand:c_cpp.creator.createRustFile"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
@@ -60,12 +62,22 @@
 			{
 				"command": "c_cpp.creator.createProjectCpp",
 				"title": "Create Cpp Project",
-				"cetegory": "C&CPP Creator"
+				"category": "C&CPP Creator"
 			},
 			{
 				"command": "c_cpp.creator.createProjectC",
 				"title": "Create C Project",
-				"cetegory": "C&CPP Creator"
+				"category": "C&CPP Creator"
+			},
+			{
+				"command": "c_cpp.creator.createPythonFile",
+				"title": "Create Python File",
+				"category": "C&CPP Creator"
+			},
+			{
+				"command": "c_cpp.creator.createRustFile",
+				"title": "Create Rust File",
+				"category": "C&CPP Creator"
 			}
 		],
 		"menus": {
@@ -102,6 +114,12 @@
 					"command": "c_cpp.creator.createMainForC"
 				},
 				{
+					"command": "c_cpp.creator.createPythonFile"
+				},
+				{
+					"command": "c_cpp.creator.createRustFile"
+				},
+				{
 					"command": "c_cpp.creator.helloWorld"
 				}
 			],
@@ -120,6 +138,12 @@
 				},
 				{
 					"command": "c_cpp.creator.createMainForC"
+				},
+				{
+					"command": "c_cpp.creator.createPythonFile"
+				},
+				{
+					"command": "c_cpp.creator.createRustFile"
 				},
 				{
 					"command": "c_cpp.creator.helloWorld"
@@ -147,6 +171,18 @@
 					".hpp",
 					".cc",
 					".h"
+				]
+			},
+			{
+				"id": "python",
+				"extensions": [
+					".py"
+				]
+			},
+			{
+				"id": "rust",
+				"extensions": [
+					".rs"
 				]
 			}
 		],
@@ -213,6 +249,16 @@
 						"type": "string",
 						"default": "",
 						"description": "General CMake CPP Project File."
+					},
+					"c_cpp.creator.template.main.py": {
+						"type": "string",
+						"default": "",
+						"description": "General Python File."
+					},
+					"c_cpp.creator.template.main.rs": {
+						"type": "string",
+						"default": "",
+						"description": "General Rust File."
 					},
 					"c_cpp.creator.default_project_path": {
 						"type": "string",

@@ -8,7 +8,7 @@ export abstract class Configs {
 
   public static classHeaderTemplate(): string {
     var p = vscode.workspace.getConfiguration().get(
-                'c_cpp.creator.template.class.h') as string;
+      'c_cpp.creator.template.class.h') as string;
 
     if (!p || 0 === p.length) {
       p = fspath.join(this._extensionPath, '/resources/template/class.h');
@@ -21,7 +21,7 @@ export abstract class Configs {
 
   public static classSourceTemplate(): string {
     var p = vscode.workspace.getConfiguration().get(
-                'c_cpp.creator.template.class.cpp') as string;
+      'c_cpp.creator.template.class.cpp') as string;
 
     if (!p || 0 === p.length) {
       p = fspath.join(this._extensionPath, '/resources/template/class.cpp');
@@ -34,7 +34,7 @@ export abstract class Configs {
 
   public static headerTemplate(): string {
     var p = vscode.workspace.getConfiguration().get(
-                'c_cpp.creator.template.header') as string;
+      'c_cpp.creator.template.header') as string;
 
     if (!p || 0 === p.length) {
       p = fspath.join(this._extensionPath, '/resources/template/header.h');
@@ -47,7 +47,7 @@ export abstract class Configs {
 
   public static sourceTemplate(): string {
     var p = vscode.workspace.getConfiguration().get(
-                'c_cpp.creator.template.source') as string;
+      'c_cpp.creator.template.source') as string;
 
     if (!p || 0 === p.length) {
       p = fspath.join(this._extensionPath, '/resources/template/source.c');
@@ -60,8 +60,8 @@ export abstract class Configs {
 
   public static classHeaderFilenameTemplate(): string {
     var template =
-        vscode.workspace.getConfiguration().get(
-            'c_cpp.creator.template.class.filename.header') as string;
+      vscode.workspace.getConfiguration().get(
+        'c_cpp.creator.template.class.filename.header') as string;
 
     if (!template || 0 === template.length) {
       template = '{{*CLASSNAME*}}.h';
@@ -72,8 +72,8 @@ export abstract class Configs {
 
   public static classSourceFilenameTemplate(): string {
     var template =
-        vscode.workspace.getConfiguration().get(
-            'c_cpp.creator.template.class.filename.source') as string;
+      vscode.workspace.getConfiguration().get(
+        'c_cpp.creator.template.class.filename.source') as string;
 
     if (!template || 0 === template.length) {
       template = '{{*CLASSNAME*}}.cpp';
@@ -84,7 +84,7 @@ export abstract class Configs {
 
   public static licenseTemplate(): string {
     var p = vscode.workspace.getConfiguration().get(
-                'c_cpp.creator.template.license') as string;
+      'c_cpp.creator.template.license') as string;
     if (!p || 0 === p.length) {
       p = fspath.join(this._extensionPath, '/resources/template/license');
     }
@@ -96,12 +96,12 @@ export abstract class Configs {
 
   public static username(): string {
     return vscode.workspace.getConfiguration().get(
-               'c_cpp.creator.template.username') as string;
+      'c_cpp.creator.template.username') as string;
   }
 
   public static cMainTemplate(): string {
     var p = vscode.workspace.getConfiguration().get(
-                'c_cpp.creator.template.main.c') as string;
+      'c_cpp.creator.template.main.c') as string;
 
     if (!p || 0 === p.length) {
       p = fspath.join(this._extensionPath, '/resources/template/main.c');
@@ -114,7 +114,7 @@ export abstract class Configs {
 
   public static cppMainTemplate(): string {
     var p = vscode.workspace.getConfiguration().get(
-                'c_cpp.creator.template.main.cpp') as string;
+      'c_cpp.creator.template.main.cpp') as string;
 
     if (!p || 0 === p.length) {
       p = fspath.join(this._extensionPath, '/resources/template/main.cpp');
@@ -127,11 +127,11 @@ export abstract class Configs {
 
   public static cCmakeProjectTemplate(): string {
     var p = vscode.workspace.getConfiguration().get(
-                'c_cpp.creator.template.c.cmakelists.txt') as string;
+      'c_cpp.creator.template.c.cmakelists.txt') as string;
 
     if (!p || 0 === p.length) {
       p = fspath.join(
-          this._extensionPath, '/resources/template/C_CMakeLists.txt');
+        this._extensionPath, '/resources/template/C_CMakeLists.txt');
     }
 
     var content = fs.readFileSync(p, 'utf-8');
@@ -141,11 +141,37 @@ export abstract class Configs {
 
   public static cppCmakeProjectTemplate(): string {
     var p = vscode.workspace.getConfiguration().get(
-                'c_cpp.creator.template.cpp.cmakelists.txt') as string;
+      'c_cpp.creator.template.cpp.cmakelists.txt') as string;
 
     if (!p || 0 === p.length) {
       p = fspath.join(
-          this._extensionPath, '/resources/template/CPP_CMakeLists.txt');
+        this._extensionPath, '/resources/template/CPP_CMakeLists.txt');
+    }
+
+    var content = fs.readFileSync(p, 'utf-8');
+    // vscode.window.showInformationMessage(content);
+    return content;
+  }
+
+  public static pyMainTemplate(): string {
+    var p = vscode.workspace.getConfiguration().get(
+      'c_cpp.creator.template.main.py') as string;
+
+    if (!p || 0 === p.length) {
+      p = fspath.join(this._extensionPath, '/resources/template/main.py');
+    }
+
+    var content = fs.readFileSync(p, 'utf-8');
+    // vscode.window.showInformationMessage(content);
+    return content;
+  }
+
+  public static rsMainTemplate(): string {
+    var p = vscode.workspace.getConfiguration().get(
+      'c_cpp.creator.template.main.rs') as string;
+
+    if (!p || 0 === p.length) {
+      p = fspath.join(this._extensionPath, '/resources/template/main.rs');
     }
 
     var content = fs.readFileSync(p, 'utf-8');
@@ -155,7 +181,7 @@ export abstract class Configs {
 
   public static projectDefaultPath(): string {
     var path = vscode.workspace.getConfiguration().get(
-                   'c_cpp.creator.default_project_path') as string;
+      'c_cpp.creator.default_project_path') as string;
 
     if (!path || 0 === path.length) {
       path = os.homedir();
