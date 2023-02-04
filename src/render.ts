@@ -4,30 +4,30 @@ import { config } from 'process';
 import * as vscode from 'vscode';
 import { Configs as configs } from './configs';
 
-type Token = {
+export type Token = {
   pattern: RegExp,
   value: string,
 };
 
 export class Render {
-  headerTemplate: string = configs.headerTemplate();
-  sourceTemplate: string = configs.sourceTemplate();
+  headerTemplate: string = configs.instance().headerTemplate();
+  sourceTemplate: string = configs.instance().sourceTemplate();
 
-  cMainTemplate: string = configs.cMainTemplate();
-  cppMainTemplate: string = configs.cppMainTemplate();
+  cMainTemplate: string = configs.instance().cMainTemplate();
+  cppMainTemplate: string = configs.instance().cppMainTemplate();
 
-  clazzHeaderFilenameTemplate: string = configs.classHeaderFilenameTemplate();
-  clazzSourceFilenameTemplate: string = configs.classSourceFilenameTemplate();
-  clazzHeaderTemplate: string = configs.classHeaderTemplate();
-  clazzSourceTemplate: string = configs.classSourceTemplate();
+  clazzHeaderFilenameTemplate: string = configs.instance().classHeaderFilenameTemplate();
+  clazzSourceFilenameTemplate: string = configs.instance().classSourceFilenameTemplate();
+  clazzHeaderTemplate: string = configs.instance().classHeaderTemplate();
+  clazzSourceTemplate: string = configs.instance().classSourceTemplate();
 
-  user: string = configs.username();
-  licenseTemplate: string = configs.licenseTemplate();
+  user: string = configs.instance().username();
+  licenseTemplate: string = configs.instance().licenseTemplate();
 
-  cmakeProjectC = configs.cCmakeProjectTemplate();
-  cmakeProjectCpp = configs.cppCmakeProjectTemplate();
-  pyMainTemplate = configs.pyMainTemplate();
-  rsMainTemplate = configs.rsMainTemplate();
+  cmakeProjectC = configs.instance().cCmakeProjectTemplate();
+  cmakeProjectCpp = configs.instance().cppCmakeProjectTemplate();
+  pyMainTemplate = configs.instance().pyMainTemplate();
+  rsMainTemplate = configs.instance().rsMainTemplate();
 
   upperPattern: RegExp = /{{\*CLASSNAME_UPPER\*}}/gi;
   lowerPattern: RegExp = /{{\*CLASSNAME_LOWER\*}}/gi;
@@ -63,11 +63,11 @@ export class Render {
     this.today = yyyy + '/' + mm + '/' + dd;
   }
 
-  render(replacements: Array<Token>, executeOn: string) {
+  render(replacements: Array<Token>, content: string) {
     replacements.forEach(elem => {
-      executeOn = executeOn.replace(elem.pattern, elem.value);
+      content = content.replace(elem.pattern, elem.value);
     });
-    return executeOn;
+    return content;
   }
 
   createDir(dirPath: string) {
@@ -418,5 +418,145 @@ export class Render {
 
     var filepath = path.join(workspacePath, filename);
     return this.createFile(filepath, this.render(tokens, this.rsMainTemplate));
+  }
+}
+
+export class CodeRender {
+  user: string = configs.instance().username();
+  licenseTemplate: string = configs.instance().licenseTemplate();
+
+  public static upperPattern: RegExp = /{{\*CLASSNAME_UPPER\*}}/gi;
+  public static lowerPattern: RegExp = /{{\*CLASSNAME_LOWER\*}}/gi;
+  public static titlePattern: RegExp = /{{\*CLASSNAME_TITLE\*}}/gi;
+  public static defaultPattern: RegExp = /{{\*CLASSNAME\*}}/gi;
+
+  public static clazzHeaderFilenamePattern: RegExp = /{{\*CLAZZ_HEADER_FILENAME\*}}/gi;
+  public static clazzSourceFilenamePattern: RegExp = /{{\*CLAZZ_SOURCE_FILENAME\*}}/gi;
+
+  public static filenameWithExtPattern: RegExp = /{{\*FILENAME_EXT\*}}/gi;
+  public static filenamePattern: RegExp = /{{\*FILENAME\*}}/gi;
+  public static filenameUpperPattern: RegExp = /{{\*FILENAME_UPPER\*}}/gi;
+  public static filenameLowerPattern: RegExp = /{{\*FILENAME_LOWER\*}}/gi;
+
+  public static userPattern: RegExp = /{{\*USER\*}}/gi;
+  public static licensePattern: RegExp = /{{\*LICENSE\*}}/gi;
+
+  public static datePattern: RegExp = /{{\*DATE\*}}/gi;
+
+  public static projectNamePattern: RegExp = /{{\*PROJECT_NAME\*}}/gi;
+  public static projectNameUpperPattern: RegExp = /{{\*PROJECT_NAME_UPPER\*}}/gi;
+  public static projectNameLowerPattern: RegExp = /{{\*PROJECT_NAME_LOWER\*}}/gi;
+  public static projectNameTitlePattern: RegExp = /{{\*PROJECT_NAME_TITLE\*}}/gi;
+
+  today: string = '';
+
+  tokens: Array<Token> = [];
+  template: string = '';
+  constructor(username: string, license: string, template: string) {
+    this.user = username;
+    this.licenseTemplate = license;
+    this.template = template;
+
+    var date = new Date();
+    var dd = String(date.getDate()).padStart(2, '0');
+    var mm = String(date.getMonth() + 1).padStart(2, '0');
+    var yyyy = date.getFullYear();
+    this.today = yyyy + '/' + mm + '/' + dd;
+
+    this.tokens = [
+      { pattern: CodeRender.datePattern, value: this.today },
+      { pattern: CodeRender.userPattern, value: this.user },
+    ];
+
+    // 生成license 模版并写入tokens列表中
+    this.tokens.push({
+      pattern: CodeRender.licensePattern,
+      value: this._render(this.tokens, this.licenseTemplate)
+    });;
+  }
+
+  _createDir(dirPath: string) {
+    // 检查本地类存储的路径是否存在，不存在则创建目录
+    if (fs.existsSync(dirPath)) {
+      var stats = fs.lstatSync(dirPath);
+
+      if (!stats.isDirectory()) {
+        // if the give directory path, isn't a directory, you cant create a class
+        return false;
+      }
+
+    } else {
+      // if the path doesn't exist, just create the directory
+      fs.mkdirSync(dirPath);
+    }
+    return true;
+  }
+
+  _createFile(filename: string, content: string) {
+    fs.writeFile(filename, content, function (err) {
+      if (err) {
+        console.error(err);
+        return false;
+      }
+    });
+
+    return true;
+  }
+
+  _render(replacements: Array<Token>, executeOn: string) {
+    replacements.forEach(elem => {
+      executeOn = executeOn.replace(elem.pattern, elem.value);
+    });
+    return executeOn;
+  }
+
+  render(workspacePath: string = "", project: string = "", target: string = "", padding: Array<Token> = []): string {
+    if (workspacePath.length > 0 && !this._createDir(workspacePath)) {
+      return "";
+    }
+
+    if (project.length > 0) {
+      this.tokens.push(
+        {
+          pattern: CodeRender.projectNamePattern,
+          value: project.trim().replace(' ', '_')
+        },
+        {
+          pattern: CodeRender.projectNameUpperPattern,
+          value: project.toUpperCase()
+        },
+        {
+          pattern: CodeRender.projectNameLowerPattern,
+          value: project.toLowerCase()
+        },
+        {
+          pattern: CodeRender.projectNameTitlePattern,
+          value: project.charAt(0).toUpperCase() + project.substring(1).toLowerCase()
+        });
+    }
+
+    if (target.length > 0) {
+      this.tokens.push(
+        {
+          pattern: CodeRender.filenamePattern,
+          value: target
+        },
+        {
+          pattern: CodeRender.filenameUpperPattern,
+          value: target.toUpperCase()
+        },
+        {
+          pattern: CodeRender.filenameLowerPattern,
+          value: target.toLowerCase()
+        },
+        {
+          pattern: CodeRender.filenameWithExtPattern,
+          value: path.parse(target).base
+        },
+      );
+    }
+
+    var tokens = [...this.tokens, ...padding];
+    return this._render(tokens, this.template);
   }
 }

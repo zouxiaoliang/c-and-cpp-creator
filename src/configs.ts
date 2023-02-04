@@ -3,198 +3,153 @@ import * as os from 'os';
 import * as fspath from 'path';
 import * as vscode from 'vscode';
 
-export abstract class Configs {
-  private static _extensionPath: string = '';
+export class Configs {
+  private _extensionPath: string = '';
+  private _templates: Map<string, string> = new Map();
 
-  public static classHeaderTemplate(): string {
-    var p = vscode.workspace.getConfiguration().get(
-      'c_cpp.creator.template.class.h') as string;
+  private static _instance: Configs = new Configs();
+
+  private constructor() {
+
+  }
+
+  private initTemplates() {
+    this._templates.set('c_cpp.creator.template.class.h', this.classHeaderTemplate());
+    this._templates.set('c_cpp.creator.template.class.cpp', this.classSourceTemplate());
+    this._templates.set('c_cpp.creator.template.header', this.headerTemplate());
+    this._templates.set('c_cpp.creator.template.source', this.sourceTemplate());
+    this._templates.set('c_cpp.creator.template.class.filename.header', this.classHeaderFilenameTemplate());
+    this._templates.set('c_cpp.creator.template.class.filename.source', this.classSourceFilenameTemplate());
+    this._templates.set('c_cpp.creator.template.license', this.licenseTemplate());
+    this._templates.set('c_cpp.creator.template.username', this.username());
+    this._templates.set('c_cpp.creator.template.main.c', this.cMainTemplate());
+    this._templates.set('c_cpp.creator.template.main.cpp', this.cppMainTemplate());
+    this._templates.set('c_cpp.creator.template.c.cmakelists.txt', this.cCmakeProjectTemplate());
+    this._templates.set('c_cpp.creator.template.cpp.cmakelists.txt', this.cppCmakeProjectTemplate());
+    this._templates.set('c_cpp.creator.template.main.py', this.pyMainTemplate());
+    this._templates.set('c_cpp.creator.template.main.rs', this.rsMainTemplate());
+    this._templates.set('c_cpp.creator.template.main.sh', this.shellTemplate());
+    this._templates.set('c_cpp.creator.template.main.go', this.goTemplate());
+    this._templates.set('c_cpp.creator.template.main.cmakefile', this.cmakefileTemplate());
+  }
+
+  public static instance(): Configs {
+    return Configs._instance;
+  }
+
+  public readTemplateFile(configKey: string, defaultPath: string): string {
+    var p = vscode.workspace.getConfiguration().get(configKey) as string;
+
+    var extensionPath = this.extensionPath();
+    if (0 === extensionPath.length) {
+      return "";
+    }
 
     if (!p || 0 === p.length) {
-      p = fspath.join(this._extensionPath, '/resources/template/class.h');
+      p = fspath.join(extensionPath, defaultPath);
     }
 
     var content = fs.readFileSync(p, 'utf-8');
-    // vscode.window.showInformationMessage(content);
     return content;
   }
 
-  public static classSourceTemplate(): string {
-    var p = vscode.workspace.getConfiguration().get(
-      'c_cpp.creator.template.class.cpp') as string;
-
-    if (!p || 0 === p.length) {
-      p = fspath.join(this._extensionPath, '/resources/template/class.cpp');
-    }
-
-    var content = fs.readFileSync(p, 'utf-8');
-    // vscode.window.showInformationMessage(content);
-    return content;
-  }
-
-  public static headerTemplate(): string {
-    var p = vscode.workspace.getConfiguration().get(
-      'c_cpp.creator.template.header') as string;
-
-    if (!p || 0 === p.length) {
-      p = fspath.join(this._extensionPath, '/resources/template/header.h');
-    }
-
-    var content = fs.readFileSync(p, 'utf-8');
-    // vscode.window.showInformationMessage(content);
-    return content;
-  }
-
-  public static sourceTemplate(): string {
-    var p = vscode.workspace.getConfiguration().get(
-      'c_cpp.creator.template.source') as string;
-
-    if (!p || 0 === p.length) {
-      p = fspath.join(this._extensionPath, '/resources/template/source.c');
-    }
-
-    var content = fs.readFileSync(p, 'utf-8');
-    // vscode.window.showInformationMessage(content);
-    return content;
-  }
-
-  public static classHeaderFilenameTemplate(): string {
-    var template =
+  public readTemplateString(configKey: string, defaultValue: string = ""): string {
+    var content =
       vscode.workspace.getConfiguration().get(
-        'c_cpp.creator.template.class.filename.header') as string;
+        configKey) as string;
 
-    if (!template || 0 === template.length) {
-      template = '{{*CLASSNAME*}}.h';
+    if (!content || 0 === content.length) {
+      content = defaultValue;
     }
 
-    return template;
-  }
-
-  public static classSourceFilenameTemplate(): string {
-    var template =
-      vscode.workspace.getConfiguration().get(
-        'c_cpp.creator.template.class.filename.source') as string;
-
-    if (!template || 0 === template.length) {
-      template = '{{*CLASSNAME*}}.cpp';
-    }
-
-    return template;
-  }
-
-  public static licenseTemplate(): string {
-    var p = vscode.workspace.getConfiguration().get(
-      'c_cpp.creator.template.license') as string;
-    if (!p || 0 === p.length) {
-      p = fspath.join(this._extensionPath, '/resources/template/license');
-    }
-
-    var content = fs.readFileSync(p, 'utf-8');
-    // vscode.window.showInformationMessage(content);
     return content;
   }
 
-  public static username(): string {
-    return vscode.workspace.getConfiguration().get(
-      'c_cpp.creator.template.username') as string;
+  public classHeaderTemplate(): string {
+    return this.readTemplateFile('c_cpp.creator.template.class.h', '/resources/template/class.h');
   }
 
-  public static cMainTemplate(): string {
-    var p = vscode.workspace.getConfiguration().get(
-      'c_cpp.creator.template.main.c') as string;
-
-    if (!p || 0 === p.length) {
-      p = fspath.join(this._extensionPath, '/resources/template/main.c');
-    }
-
-    var content = fs.readFileSync(p, 'utf-8');
-    // vscode.window.showInformationMessage(content);
-    return content;
+  public classSourceTemplate(): string {
+    return this.readTemplateFile('c_cpp.creator.template.class.cpp', '/resources/template/class.cpp');
   }
 
-  public static cppMainTemplate(): string {
-    var p = vscode.workspace.getConfiguration().get(
-      'c_cpp.creator.template.main.cpp') as string;
-
-    if (!p || 0 === p.length) {
-      p = fspath.join(this._extensionPath, '/resources/template/main.cpp');
-    }
-
-    var content = fs.readFileSync(p, 'utf-8');
-    // vscode.window.showInformationMessage(content);
-    return content;
+  public headerTemplate(): string {
+    return this.readTemplateFile('c_cpp.creator.template.header', '/resources/template/header.h');
   }
 
-  public static cCmakeProjectTemplate(): string {
-    var p = vscode.workspace.getConfiguration().get(
-      'c_cpp.creator.template.c.cmakelists.txt') as string;
-
-    if (!p || 0 === p.length) {
-      p = fspath.join(
-        this._extensionPath, '/resources/template/C_CMakeLists.txt');
-    }
-
-    var content = fs.readFileSync(p, 'utf-8');
-    // vscode.window.showInformationMessage(content);
-    return content;
+  public sourceTemplate(): string {
+    return this.readTemplateFile('c_cpp.creator.template.source', '/resources/template/source.c');
   }
 
-  public static cppCmakeProjectTemplate(): string {
-    var p = vscode.workspace.getConfiguration().get(
-      'c_cpp.creator.template.cpp.cmakelists.txt') as string;
-
-    if (!p || 0 === p.length) {
-      p = fspath.join(
-        this._extensionPath, '/resources/template/CPP_CMakeLists.txt');
-    }
-
-    var content = fs.readFileSync(p, 'utf-8');
-    // vscode.window.showInformationMessage(content);
-    return content;
+  public shellTemplate(): string {
+    return this.readTemplateFile('c_cpp.creator.template.main.sh', '/resources/template/main.sh');
   }
 
-  public static pyMainTemplate(): string {
-    var p = vscode.workspace.getConfiguration().get(
-      'c_cpp.creator.template.main.py') as string;
-
-    if (!p || 0 === p.length) {
-      p = fspath.join(this._extensionPath, '/resources/template/main.py');
-    }
-
-    var content = fs.readFileSync(p, 'utf-8');
-    // vscode.window.showInformationMessage(content);
-    return content;
+  public goTemplate(): string {
+    return this.readTemplateFile('c_cpp.creator.template.main.go', '/resources/template/main.go');
   }
 
-  public static rsMainTemplate(): string {
-    var p = vscode.workspace.getConfiguration().get(
-      'c_cpp.creator.template.main.rs') as string;
-
-    if (!p || 0 === p.length) {
-      p = fspath.join(this._extensionPath, '/resources/template/main.rs');
-    }
-
-    var content = fs.readFileSync(p, 'utf-8');
-    // vscode.window.showInformationMessage(content);
-    return content;
+  public cmakefileTemplate(): string {
+    return this.readTemplateFile('c_cpp.creator.template.main.cmakefile', '/resources/template/CPP_CMakeLists.txt');
   }
 
-  public static projectDefaultPath(): string {
-    var path = vscode.workspace.getConfiguration().get(
-      'c_cpp.creator.default_project_path') as string;
-
-    if (!path || 0 === path.length) {
-      path = os.homedir();
-    }
-
-    return path;
+  public classHeaderFilenameTemplate(): string {
+    return this.readTemplateString('c_cpp.creator.template.class.filename.header', '{{*CLASSNAME*}}.h');
   }
 
-  public static setExtensionPath(p: string) {
+  public classSourceFilenameTemplate(): string {
+    return this.readTemplateString('c_cpp.creator.template.class.filename.source', '{{*CLASSNAME*}}.cpp');
+  }
+
+  public licenseTemplate(): string {
+    return this.readTemplateFile('c_cpp.creator.template.license', '/resources/template/license');
+  }
+
+  public username(): string {
+    return this.readTemplateString('c_cpp.creator.template.username', '');
+  }
+
+  public cMainTemplate(): string {
+    return this.readTemplateFile('c_cpp.creator.template.main.c', '/resources/template/main.c');
+  }
+
+  public cppMainTemplate(): string {
+    return this.readTemplateFile('c_cpp.creator.template.main.cpp', '/resources/template/main.cpp');
+  }
+
+  public cCmakeProjectTemplate(): string {
+    return this.readTemplateFile('c_cpp.creator.template.c.cmakelists.txt', '/resources/template/C_CMakeLists.txt');
+  }
+
+  public cppCmakeProjectTemplate(): string {
+    return this.readTemplateFile('c_cpp.creator.template.cpp.cmakelists.txt', '/resources/template/CPP_CMakeLists.txt');
+  }
+
+  public pyMainTemplate(): string {
+    return this.readTemplateFile('c_cpp.creator.template.main.py', '/resources/template/main.py');
+  }
+
+  public rsMainTemplate(): string {
+    return this.readTemplateFile('c_cpp.creator.template.main.rs', '/resources/template/main.rs');
+  }
+
+  public projectDefaultPath(): string {
+    return this.readTemplateString('c_cpp.creator.default_project_path', os.homedir());
+  }
+
+  public setExtensionPath(p: string) {
     this._extensionPath = p;
+    this.initTemplates();
   }
 
-  public static extensionPath(): string {
+  public get(key: string): string {
+    if (this._templates.has(key)) {
+      return this._templates.get(key) as string;
+    }
+    return '';
+  }
+
+  public extensionPath(): string {
     return this._extensionPath;
   }
 }

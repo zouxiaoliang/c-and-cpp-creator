@@ -24,7 +24,10 @@
 		"onCommand:c_cpp.creator.createProjectC",
 		"onCommand:c_cpp.creator.createProjectCpp",
 		"onCommand:c_cpp.creator.createPythonFile",
-		"onCommand:c_cpp.creator.createRustFile"
+		"onCommand:c_cpp.creator.createRustFile",
+		"onCommand:c_cpp.creator.createShellFile",
+		"onCommand:c_cpp.creator.createGoFile",
+		"onCommand:c_cpp.creator.createCMakeFile"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
@@ -78,6 +81,21 @@
 				"command": "c_cpp.creator.createRustFile",
 				"title": "Create Rust File",
 				"category": "C&CPP Creator"
+			},
+			{
+				"command": "c_cpp.creator.createShellFile",
+				"title": "Create Shell File",
+				"category": "C&CPP Creator"
+			},
+			{
+				"command": "c_cpp.creator.createGoFile",
+				"title": "Create Go File",
+				"category": "C&CPP Creator"
+			},
+			{
+				"command": "c_cpp.creator.createCMakeFile",
+				"title": "Create CMake File",
+				"category": "C&CPP Creator"
 			}
 		],
 		"menus": {
@@ -120,10 +138,25 @@
 					"command": "c_cpp.creator.createRustFile"
 				},
 				{
+					"command": "c_cpp.creator.createShellFile"
+				},
+				{
+					"command": "c_cpp.creator.createGoFile"
+				},
+				{
+					"command": "c_cpp.creator.createCMakeFile"
+				},
+				{
 					"command": "c_cpp.creator.helloWorld"
 				}
 			],
 			"c_cpp.creator.file": [
+				{
+					"command": "c_cpp.creator.createProjectC"
+				},
+				{
+					"command": "c_cpp.creator.createProjectCpp"
+				},
 				{
 					"command": "c_cpp.creator.createSourceFile"
 				},
@@ -144,6 +177,15 @@
 				},
 				{
 					"command": "c_cpp.creator.createRustFile"
+				},
+				{
+					"command": "c_cpp.creator.createShellFile"
+				},
+				{
+					"command": "c_cpp.creator.createGoFile"
+				},
+				{
+					"command": "c_cpp.creator.createCMakeFile"
 				},
 				{
 					"command": "c_cpp.creator.helloWorld"
@@ -264,6 +306,21 @@
 						"type": "string",
 						"default": "",
 						"description": "Default Project Path"
+					},
+					"c_cpp.creator.template.main.sh": {
+						"type": "string",
+						"default": "",
+						"description": "General Shell File."
+					},
+					"c_cpp.creator.template.main.go": {
+						"type": "string",
+						"default": "",
+						"description": "General Go File."
+					},
+					"c_cpp.creator.template.main.cmakefile": {
+						"type": "string",
+						"default": "",
+						"description": "General CMake File."
 					}
 				}
 			}

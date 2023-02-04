@@ -25,7 +25,10 @@
         "CLASSNAMELOWER",
         "CLASSNAMEUPPER",
         "clazz",
-        "endfunction"
+        "cmakefile",
+        "cmakelists",
+        "endfunction",
+        "fspath"
     ],
     "spellright.ignoreFiles": [
         "**/.gitignore",

@@ -1,13 +1,15 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-import { Commands as commands } from './commands';
+import { v2 as commands_ns } from './commands';
 import { Configs as configs } from './configs';
+
+let commands = commands_ns.Commands;
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-  configs.setExtensionPath(context.extensionPath);
+  configs.instance().setExtensionPath(context.extensionPath);
 
   // Use the console to output diagnostic information (console.log) and errors
   // (console.error) This line of code will only be executed once when your
@@ -68,6 +70,21 @@ export function activate(context: vscode.ExtensionContext) {
       await commands.createRustFile(args);
     });
 
+  let createShellFile = vscode.commands.registerCommand(
+    'c_cpp.creator.createShellFile', async (args) => {
+      await commands.createShellFile(args);
+    });
+
+  let createGoFile = vscode.commands.registerCommand(
+    'c_cpp.creator.createGoFile', async (args) => {
+      await commands.createGoFile(args);
+    });
+
+  let createCMakeFile = vscode.commands.registerCommand(
+    'c_cpp.creator.createCMakeFile', async (args) => {
+      await commands.createCMakeFile(args);
+    });
+
   context.subscriptions.push(helloWorld);
   context.subscriptions.push(createHeaderFile);
   context.subscriptions.push(createSourceFile);
@@ -78,6 +95,9 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(createProjectCpp);
   context.subscriptions.push(createPythonFile);
   context.subscriptions.push(createRustFile);
+  context.subscriptions.push(createShellFile);
+  context.subscriptions.push(createGoFile);
+  context.subscriptions.push(createCMakeFile);
 }
 
 // this method is called when your extension is deactivated
