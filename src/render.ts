@@ -452,6 +452,7 @@ export class CodeRender {
 
   tokens: Array<Token> = [];
   template: string = '';
+
   constructor(username: string, license: string, template: string) {
     this.user = username;
     this.licenseTemplate = license;
@@ -510,6 +511,51 @@ export class CodeRender {
     return executeOn;
   }
 
+  updateProjectName(project: string) {
+    if (project.length > 0) {
+      this.tokens.push(
+        {
+          pattern: CodeRender.projectNamePattern,
+          value: project.trim().replace(' ', '_')
+        },
+        {
+          pattern: CodeRender.projectNameUpperPattern,
+          value: project.toUpperCase()
+        },
+        {
+          pattern: CodeRender.projectNameLowerPattern,
+          value: project.toLowerCase()
+        },
+        {
+          pattern: CodeRender.projectNameTitlePattern,
+          value: project.charAt(0).toUpperCase() + project.substring(1).toLowerCase()
+        });
+    }
+  }
+
+  updateFilename(target: string) {
+    if (target.length > 0) {
+      this.tokens.push(
+        {
+          pattern: CodeRender.filenamePattern,
+          value: target
+        },
+        {
+          pattern: CodeRender.filenameUpperPattern,
+          value: target.toUpperCase()
+        },
+        {
+          pattern: CodeRender.filenameLowerPattern,
+          value: target.toLowerCase()
+        },
+        {
+          pattern: CodeRender.filenameWithExtPattern,
+          value: path.parse(target).base
+        },
+      );
+    }
+  }
+
   render(workspacePath: string = "", project: string = "", target: string = "", padding: Array<Token> = []): string {
     if (workspacePath.length > 0 && !this._createDir(workspacePath)) {
       return "";
@@ -533,27 +579,6 @@ export class CodeRender {
           pattern: CodeRender.projectNameTitlePattern,
           value: project.charAt(0).toUpperCase() + project.substring(1).toLowerCase()
         });
-    }
-
-    if (target.length > 0) {
-      this.tokens.push(
-        {
-          pattern: CodeRender.filenamePattern,
-          value: target
-        },
-        {
-          pattern: CodeRender.filenameUpperPattern,
-          value: target.toUpperCase()
-        },
-        {
-          pattern: CodeRender.filenameLowerPattern,
-          value: target.toLowerCase()
-        },
-        {
-          pattern: CodeRender.filenameWithExtPattern,
-          value: path.parse(target).base
-        },
-      );
     }
 
     var tokens = [...this.tokens, ...padding];
