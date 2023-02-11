@@ -2,7 +2,7 @@
 	"name": "c-and-cpp-creator",
 	"displayName": "C&C++ Creator",
 	"description": "This is a c&cpp creator extension for vscode.",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"publisher": "zouxiaoliang",
 	"icon": "icon/logo.png",
 	"repository": {
@@ -25,6 +25,7 @@
 		"onCommand:c_cpp.creator.createProjectCpp",
 		"onCommand:c_cpp.creator.createPythonFile",
 		"onCommand:c_cpp.creator.createRustFile",
+		"onCommand:c_cpp.creator.createRustMod",
 		"onCommand:c_cpp.creator.createShellFile",
 		"onCommand:c_cpp.creator.createGoFile",
 		"onCommand:c_cpp.creator.createCMakeFile"
@@ -96,6 +97,11 @@
 				"command": "c_cpp.creator.createCMakeFile",
 				"title": "Create CMake File",
 				"category": "C&CPP Creator"
+			},
+			{
+				"command": "c_cpp.creator.createRustMod",
+				"title": "Create Rust Mod",
+				"category": "C&CPP Creator"
 			}
 		],
 		"menus": {
@@ -147,6 +153,9 @@
 					"command": "c_cpp.creator.createCMakeFile"
 				},
 				{
+					"command": "c_cpp.creator.createRustMod"
+				},
+				{
 					"command": "c_cpp.creator.helloWorld"
 				}
 			],
@@ -186,6 +195,9 @@
 				},
 				{
 					"command": "c_cpp.creator.createCMakeFile"
+				},
+				{
+					"command": "c_cpp.creator.createRustMod"
 				},
 				{
 					"command": "c_cpp.creator.helloWorld"

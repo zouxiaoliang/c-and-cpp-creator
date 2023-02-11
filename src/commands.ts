@@ -665,13 +665,6 @@ export namespace v2 {
         return;
       }
 
-      // render cmakefile for c
-      var cmakefile = new CodeRender(
-        configs.instance().username(),
-        configs.instance().licenseTemplate(),
-        configs.instance().cCmakeProjectTemplate()
-      );
-
       let uri = _uri as unknown as vscode.Uri;
       let projectName = _projectName as unknown as string;
       let projectPath = path.join(uri.path, projectName);
@@ -679,13 +672,21 @@ export namespace v2 {
       // create director
       this.mkdir(projectPath);
 
-      fs.writeFile(path.join(projectPath, "CMakeLists.txt"), cmakefile.render(), function (err) {
+      // render cmakefile for c
+      var cmakefile = new CodeRender(
+        configs.instance().username(),
+        configs.instance().licenseTemplate(),
+        configs.instance().cCmakeProjectTemplate()
+      );
+
+      fs.writeFile(path.join(projectPath, "CMakeLists.txt"), cmakefile.render("", projectName), function (err) {
         if (err) {
           log('can\'t create cmake file from c & cpp file creator, what: ' + err);
         } else {
           log('create cmake file from c & cpp file creator');
         }
       });
+
       // render main.c
       var c = new CodeRender(
         configs.instance().username(),
@@ -722,6 +723,7 @@ export namespace v2 {
         configs.instance().licenseTemplate(),
         configs.instance().cppCmakeProjectTemplate()
       );
+
       fs.writeFile(path.join(projectPath, "CMakeLists.txt"), cmakefile.render("", projectName), function (err) {
         if (err) {
           log('can\'t create cmake file from c & cpp file creator, what: ' + err);
@@ -878,6 +880,33 @@ export namespace v2 {
           log('can\'t create shell file from c & cpp file creator, what: ' + err);
         } else {
           log('create shell file ' + filename + ' from c & cpp file creator');
+        }
+      });
+    }
+
+    public static async createRustMod(args: any) {
+      var [dirname, filename] = await readInput(args);
+      if (!filename) {
+        log('can\'t create rust mod from c & cpp file creator, filename is empty.');
+        return;
+      }
+
+      let modName = path.join(dirname, filename);
+      this.mkdir(modName);
+      var filepath = path.join(modName, "mod.rs");
+
+      // 创建文件模版
+      var _render = new CodeRender(
+        configs.instance().username(),
+        configs.instance().licenseTemplate(),
+        configs.instance().rsMainTemplate()
+      );
+
+      fs.writeFile(filepath, _render.render(modName, "", filename), function (err) {
+        if (err) {
+          log('can\'t create rust file from c & cpp file creator, what: ' + err);
+        } else {
+          log('create rust file ' + filename + ' from c & cpp file creator');
         }
       });
     }

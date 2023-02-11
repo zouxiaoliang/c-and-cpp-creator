@@ -85,6 +85,11 @@ export function activate(context: vscode.ExtensionContext) {
       await commands.createCMakeFile(args);
     });
 
+  let createRustMod = vscode.commands.registerCommand(
+    'c_cpp.creator.createRustMod', async (args) => {
+      await commands.createRustMod(args);
+    });
+
   context.subscriptions.push(helloWorld);
   context.subscriptions.push(createHeaderFile);
   context.subscriptions.push(createSourceFile);
@@ -98,6 +103,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(createShellFile);
   context.subscriptions.push(createGoFile);
   context.subscriptions.push(createCMakeFile);
+  context.subscriptions.push(createRustMod);
 }
 
 // this method is called when your extension is deactivated

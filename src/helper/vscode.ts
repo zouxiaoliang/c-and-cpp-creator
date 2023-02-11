@@ -1,11 +1,11 @@
-import {promises} from 'dns';
+import { promises } from 'dns';
 import * as fs from 'fs';
 import * as vscode from 'vscode';
 
 import path = require('path');
 
 export abstract class VscodeHelper {
-  public static async inputClassName(): Promise<string|undefined> {
+  public static async inputClassName(): Promise<string | undefined> {
     var option: vscode.InputBoxOptions = {
       ignoreFocusOut: false,
       placeHolder: 'Hello world.',
@@ -15,7 +15,7 @@ export abstract class VscodeHelper {
     return await vscode.window.showInputBox(option);
   }
 
-  public static async inputDirPath(): Promise<string|undefined> {
+  public static async inputDirPath(): Promise<string | undefined> {
     var option: vscode.InputBoxOptions = {
       ignoreFocusOut: false,
       placeHolder: 'Give me your path.',
@@ -25,7 +25,7 @@ export abstract class VscodeHelper {
     return await vscode.window.showInputBox(option);
   }
 
-  public static async inputFilePath(): Promise<string|undefined> {
+  public static async inputFilePath(): Promise<string | undefined> {
     var option: vscode.InputBoxOptions = {
       ignoreFocusOut: false,
       placeHolder: 'Give me you filename.',
@@ -35,7 +35,7 @@ export abstract class VscodeHelper {
     return await vscode.window.showInputBox(option);
   }
 
-  public static async inputProjectName(): Promise<string|undefined> {
+  public static async inputProjectName(): Promise<string | undefined> {
     var option: vscode.InputBoxOptions = {
       ignoreFocusOut: false,
       placeHolder: 'Give me you project name.',
@@ -49,7 +49,7 @@ export abstract class VscodeHelper {
     if (1 === vscode.workspace.workspaceFolders?.length) {
       dir = vscode.workspace.workspaceFolders[0].uri.path;
     }
-    if (args != null && args.fsPath != null) {
+    if (args !== null && args.fsPath !== null) {
       dir = args.fsPath;
       if (typeof dir === 'string' && fs.existsSync(dir)) {
         var stats = fs.lstatSync(dir);
