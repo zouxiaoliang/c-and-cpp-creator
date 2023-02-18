@@ -352,8 +352,27 @@ export namespace v2 {
         configs.instance().licenseTemplate(),
         configs.instance().headerTemplate()
       );
-
-      fs.writeFile(filepath, _render.render(dirname, "", path.parse(filename).name), function (err) {
+      var _headerFilename = _render.render();
+      var _headerFilenameNotExt = path.parse(filename).name;
+      var tokens: Array<render.Token> = [
+        {
+          pattern: render.CodeRender.filenamePattern,
+          value: _headerFilenameNotExt
+        },
+        {
+          pattern: render.CodeRender.filenameUpperPattern,
+          value: _headerFilenameNotExt.toUpperCase()
+        },
+        {
+          pattern: render.CodeRender.filenameLowerPattern,
+          value: _headerFilenameNotExt.toLowerCase()
+        },
+        {
+          pattern: render.CodeRender.filenameWithExtPattern,
+          value: path.parse(_headerFilename).base
+        },
+      ];
+      fs.writeFile(filepath, _render.render(dirname, "", filename, tokens), function (err) {
         if (err) {
           log('can\'t create header file from c & cpp file creator, what: ' + err);
         } else {
@@ -678,6 +697,9 @@ export namespace v2 {
         configs.instance().licenseTemplate(),
         configs.instance().cCmakeProjectTemplate()
       );
+
+      // create director
+      this.mkdir(projectPath);
 
       fs.writeFile(path.join(projectPath, "CMakeLists.txt"), cmakefile.render("", projectName), function (err) {
         if (err) {

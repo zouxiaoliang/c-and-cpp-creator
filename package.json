@@ -2,7 +2,7 @@
 	"name": "c-and-cpp-creator",
 	"displayName": "C&C++ Creator",
 	"description": "This is a c&cpp creator extension for vscode.",
-	"version": "0.0.7",
+	"version": "0.0.8",
 	"publisher": "zouxiaoliang",
 	"icon": "icon/logo.png",
 	"repository": {
