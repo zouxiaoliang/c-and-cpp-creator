@@ -40,19 +40,19 @@ This extension contributes the following settings
 
 | Name | Type | Value |
 | ----- | ----- | ----- |
-| c_cpp.creator.template.class.h | path | default: empty |
-| c_cpp.creator.template.class.cpp | path | default: empty |
-| c_cpp.creator.template.header | path | default: empty |
-| c_cpp.creator.template.source | path | default: empty |
-| c_cpp.creator.template.class.filename.header | string | default: {{\*CLASSNAME\*}}.h |
-| c_cpp.creator.template.class.filename.source | string | default: {{\*CLASSNAME\*}}.cpp |
-| c_cpp.creator.template.license | string | default: empty |
-| c_cpp.creator.template.username | string | default: zouxiaoliang |
-| c_cpp.creator.template.main.c | path | default: empty |
-| c_cpp.creator.template.main.cpp | path | default: empty |
+| code_assistant.creator.template.class.h | path | default: empty |
+| code_assistant.creator.template.class.cpp | path | default: empty |
+| code_assistant.creator.template.header | path | default: empty |
+| code_assistant.creator.template.source | path | default: empty |
+| code_assistant.creator.template.class.filename.header | string | default: {{\*CLASSNAME\*}}.h |
+| code_assistant.creator.template.class.filename.source | string | default: {{\*CLASSNAME\*}}.cpp |
+| code_assistant.creator.template.license | string | default: empty |
+| code_assistant.creator.template.username | string | default: zouxiaoliang |
+| code_assistant.creator.template.main.c | path | default: empty |
+| code_assistant.creator.template.main.cpp | path | default: empty |
 
 ## Default Template
-* c_cpp.creator.template.class.h
+* code_assistant.creator.template.class.h
 ```
 {{*LICENSE*}}
 
@@ -71,7 +71,7 @@ private:
 #endif // {{*CLASSNAME_UPPER*}}_H
 ```
 
-* c_cpp.creator.template.class.cpp
+* code_assistant.creator.template.class.cpp
 ```
 {{*LICENSE*}}
 
@@ -86,7 +86,7 @@ private:
 }
 ```
 
-* c_cpp.creator.template.header
+* code_assistant.creator.template.header
 ```
 {{*LICENSE*}}
 
@@ -97,12 +97,12 @@ private:
 #endif // {{*FILENAME_UPPER*}}_H
 ```
 
-* c_cpp.creator.template.source
+* code_assistant.creator.template.source
 ```
 {{*LICENSE*}}
 ```
 
-* c_cpp.creator.template.license
+* code_assistant.creator.template.license
 ```
 /**
  * @author {{*USER*}}
@@ -111,7 +111,7 @@ private:
 
 ```
 
-* c_cpp.creator.template.main.c
+* code_assistant.creator.template.main.c
 ```
 {{*LICENSE*}}
 
@@ -122,7 +122,7 @@ void main() {
 }
 ```
 
-* c_cpp.creator.template.main.cpp
+* code_assistant.creator.template.main.cpp
 ```
 {{*LICENSE*}}
 

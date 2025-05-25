@@ -14,23 +14,24 @@ export class Configs {
   }
 
   private initTemplates() {
-    this._templates.set('c_cpp.creator.template.class.h', this.classHeaderTemplate());
-    this._templates.set('c_cpp.creator.template.class.cpp', this.classSourceTemplate());
-    this._templates.set('c_cpp.creator.template.header', this.headerTemplate());
-    this._templates.set('c_cpp.creator.template.source', this.sourceTemplate());
-    this._templates.set('c_cpp.creator.template.class.filename.header', this.classHeaderFilenameTemplate());
-    this._templates.set('c_cpp.creator.template.class.filename.source', this.classSourceFilenameTemplate());
-    this._templates.set('c_cpp.creator.template.license', this.licenseTemplate());
-    this._templates.set('c_cpp.creator.template.username', this.username());
-    this._templates.set('c_cpp.creator.template.main.c', this.cMainTemplate());
-    this._templates.set('c_cpp.creator.template.main.cpp', this.cppMainTemplate());
-    this._templates.set('c_cpp.creator.template.c.cmakelists.txt', this.cCmakeProjectTemplate());
-    this._templates.set('c_cpp.creator.template.cpp.cmakelists.txt', this.cppCmakeProjectTemplate());
-    this._templates.set('c_cpp.creator.template.main.py', this.pyMainTemplate());
-    this._templates.set('c_cpp.creator.template.main.rs', this.rsMainTemplate());
-    this._templates.set('c_cpp.creator.template.main.sh', this.shellTemplate());
-    this._templates.set('c_cpp.creator.template.main.go', this.goTemplate());
-    this._templates.set('c_cpp.creator.template.main.cmakefile', this.cmakefileTemplate());
+    this._templates.set('code_assistant.creator.template.class.h', this.classHeaderTemplate());
+    this._templates.set('code_assistant.creator.template.class.cpp', this.classSourceTemplate());
+    this._templates.set('code_assistant.creator.template.header', this.headerTemplate());
+    this._templates.set('code_assistant.creator.template.source', this.sourceTemplate());
+    this._templates.set('code_assistant.creator.template.class.filename.header', this.classHeaderFilenameTemplate());
+    this._templates.set('code_assistant.creator.template.class.filename.source', this.classSourceFilenameTemplate());
+    this._templates.set('code_assistant.creator.template.license', this.licenseTemplate());
+    this._templates.set('code_assistant.creator.template.username', this.username());
+    this._templates.set('code_assistant.creator.template.main.c', this.cMainTemplate());
+    this._templates.set('code_assistant.creator.template.main.cpp', this.cppMainTemplate());
+    this._templates.set('code_assistant.creator.template.c.cmakelists.txt', this.cCmakeProjectTemplate());
+    this._templates.set('code_assistant.creator.template.cpp.cmakelists.txt', this.cppCmakeProjectTemplate());
+    this._templates.set('code_assistant.creator.template.main.py', this.pyMainTemplate());
+    this._templates.set('code_assistant.creator.template.main.rs', this.rsMainTemplate());
+    this._templates.set('code_assistant.creator.template.main.sh', this.shellTemplate());
+    this._templates.set('code_assistant.creator.template.main.go', this.goTemplate());
+    this._templates.set('code_assistant.creator.template.main.cmakefile', this.cmakefileTemplate());
+    this._templates.set('code_assistant.creator.template.plantuml', this.plantumlTemplate());
   }
 
   public static instance(): Configs {
@@ -66,75 +67,79 @@ export class Configs {
   }
 
   public classHeaderTemplate(): string {
-    return this.readTemplateFile('c_cpp.creator.template.class.h', '/resources/template/class.h');
+    return this.readTemplateFile('code_assistant.creator.template.class.h', '/resources/template/class.h');
   }
 
   public classSourceTemplate(): string {
-    return this.readTemplateFile('c_cpp.creator.template.class.cpp', '/resources/template/class.cpp');
+    return this.readTemplateFile('code_assistant.creator.template.class.cpp', '/resources/template/class.cpp');
   }
 
   public headerTemplate(): string {
-    return this.readTemplateFile('c_cpp.creator.template.header', '/resources/template/header.h');
+    return this.readTemplateFile('code_assistant.creator.template.header', '/resources/template/header.h');
   }
 
   public sourceTemplate(): string {
-    return this.readTemplateFile('c_cpp.creator.template.source', '/resources/template/source.c');
+    return this.readTemplateFile('code_assistant.creator.template.source', '/resources/template/source.c');
   }
 
   public shellTemplate(): string {
-    return this.readTemplateFile('c_cpp.creator.template.main.sh', '/resources/template/main.sh');
+    return this.readTemplateFile('code_assistant.creator.template.main.sh', '/resources/template/main.sh');
   }
 
   public goTemplate(): string {
-    return this.readTemplateFile('c_cpp.creator.template.main.go', '/resources/template/main.go');
+    return this.readTemplateFile('code_assistant.creator.template.main.go', '/resources/template/main.go');
   }
 
   public cmakefileTemplate(): string {
-    return this.readTemplateFile('c_cpp.creator.template.main.cmakefile', '/resources/template/CPP_CMakeLists.txt');
+    return this.readTemplateFile('code_assistant.creator.template.main.cmakefile', '/resources/template/CPP_CMakeLists.txt');
   }
 
   public classHeaderFilenameTemplate(): string {
-    return this.readTemplateString('c_cpp.creator.template.class.filename.header', '{{*CLASSNAME*}}.h');
+    return this.readTemplateString('code_assistant.creator.template.class.filename.header', '{{*CLASSNAME*}}.h');
   }
 
   public classSourceFilenameTemplate(): string {
-    return this.readTemplateString('c_cpp.creator.template.class.filename.source', '{{*CLASSNAME*}}.cpp');
+    return this.readTemplateString('code_assistant.creator.template.class.filename.source', '{{*CLASSNAME*}}.cpp');
   }
 
   public licenseTemplate(): string {
-    return this.readTemplateFile('c_cpp.creator.template.license', '/resources/template/license');
+    return this.readTemplateFile('code_assistant.creator.template.license', '/resources/template/license');
   }
 
   public username(): string {
-    return this.readTemplateString('c_cpp.creator.template.username', '');
+    return this.readTemplateString('code_assistant.creator.template.username', '');
   }
 
   public cMainTemplate(): string {
-    return this.readTemplateFile('c_cpp.creator.template.main.c', '/resources/template/main.c');
+    return this.readTemplateFile('code_assistant.creator.template.main.c', '/resources/template/main.c');
   }
 
   public cppMainTemplate(): string {
-    return this.readTemplateFile('c_cpp.creator.template.main.cpp', '/resources/template/main.cpp');
+    return this.readTemplateFile('code_assistant.creator.template.main.cpp', '/resources/template/main.cpp');
   }
 
   public cCmakeProjectTemplate(): string {
-    return this.readTemplateFile('c_cpp.creator.template.c.cmakelists.txt', '/resources/template/C_CMakeLists.txt');
+    return this.readTemplateFile('code_assistant.creator.template.c.cmakelists.txt', '/resources/template/C_CMakeLists.txt');
   }
 
   public cppCmakeProjectTemplate(): string {
-    return this.readTemplateFile('c_cpp.creator.template.cpp.cmakelists.txt', '/resources/template/CPP_CMakeLists.txt');
+    return this.readTemplateFile('code_assistant.creator.template.cpp.cmakelists.txt', '/resources/template/CPP_CMakeLists.txt');
   }
 
   public pyMainTemplate(): string {
-    return this.readTemplateFile('c_cpp.creator.template.main.py', '/resources/template/main.py');
+    return this.readTemplateFile('code_assistant.creator.template.main.py', '/resources/template/main.py');
   }
 
   public rsMainTemplate(): string {
-    return this.readTemplateFile('c_cpp.creator.template.main.rs', '/resources/template/main.rs');
+    return this.readTemplateFile('code_assistant.creator.template.main.rs', '/resources/template/main.rs');
+  }
+
+  public plantumlTemplate(): string {
+    return this.readTemplateFile('code_assistant.creator.template.plantuml', '/resources/template/main.puml');
   }
 
   public projectDefaultPath(): string {
-    return this.readTemplateString('c_cpp.creator.default_project_path', os.homedir());
+    return this.readTemplateString('code_assistant.creator.default_project_path', os.homedir());
   }
 
   public setExtensionPath(p: string) {

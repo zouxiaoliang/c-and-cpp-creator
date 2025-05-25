@@ -1,8 +1,8 @@
 {
-	"name": "c-and-cpp-creator",
-	"displayName": "C&C++ Creator",
-	"description": "This is a c&cpp creator extension for vscode.",
-	"version": "0.0.8",
+	"name": "code-assistant",
+	"displayName": "Code assistant",
+	"description": "This is a Code assistant extension for vscode.",
+	"version": "0.1.0",
 	"publisher": "zouxiaoliang",
 	"icon": "icon/logo.png",
 	"repository": {
@@ -15,205 +15,222 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:c_cpp.creator.helloWorld",
-		"onCommand:c_cpp.creator.createSourceFile",
-		"onCommand:c_cpp.creator.createHeaderFile",
-		"onCommand:c_cpp.creator.createClass",
-		"onCommand:c_cpp.creator.createMainForCpp",
-		"onCommand:c_cpp.creator.createMainForC",
-		"onCommand:c_cpp.creator.createProjectC",
-		"onCommand:c_cpp.creator.createProjectCpp",
-		"onCommand:c_cpp.creator.createPythonFile",
-		"onCommand:c_cpp.creator.createRustFile",
-		"onCommand:c_cpp.creator.createRustMod",
-		"onCommand:c_cpp.creator.createShellFile",
-		"onCommand:c_cpp.creator.createGoFile",
-		"onCommand:c_cpp.creator.createCMakeFile"
+		"onCommand:code_assistant.creator.helloWorld",
+		"onCommand:code_assistant.creator.createSourceFile",
+		"onCommand:code_assistant.creator.createHeaderFile",
+		"onCommand:code_assistant.creator.createClass",
+		"onCommand:code_assistant.creator.createMainForCpp",
+		"onCommand:code_assistant.creator.createMainForC",
+		"onCommand:code_assistant.creator.createProjectC",
+		"onCommand:code_assistant.creator.createProjectCpp",
+		"onCommand:code_assistant.creator.createProjectRust",
+		"onCommand:code_assistant.creator.createPythonFile",
+		"onCommand:code_assistant.creator.createRustFile",
+		"onCommand:code_assistant.creator.createRustMod",
+		"onCommand:code_assistant.creator.createShellFile",
+		"onCommand:code_assistant.creator.createGoFile",
+		"onCommand:code_assistant.creator.createCMakeFile",
+		"onCommand:code_assistant.creator.createPuml"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "c_cpp.creator.helloWorld",
+				"command": "code_assistant.creator.helloWorld",
 				"title": "Hello World",
 				"category": "C&CPP Creator"
 			},
 			{
-				"command": "c_cpp.creator.createSourceFile",
+				"command": "code_assistant.creator.createSourceFile",
 				"title": "Create Source File",
 				"category": "C&CPP Creator"
 			},
 			{
-				"command": "c_cpp.creator.createHeaderFile",
+				"command": "code_assistant.creator.createHeaderFile",
 				"title": "Create Header File",
 				"category": "C&CPP Creator"
 			},
 			{
-				"command": "c_cpp.creator.createClass",
+				"command": "code_assistant.creator.createClass",
 				"title": "Create Class",
 				"category": "C&CPP Creator"
 			},
 			{
-				"command": "c_cpp.creator.createMainForCpp",
+				"command": "code_assistant.creator.createMainForCpp",
 				"title": "Create Cpp Main",
 				"category": "C&CPP Creator"
 			},
 			{
-				"command": "c_cpp.creator.createMainForC",
+				"command": "code_assistant.creator.createMainForC",
 				"title": "Create C Main",
 				"category": "C&CPP Creator"
 			},
 			{
-				"command": "c_cpp.creator.createProjectCpp",
+				"command": "code_assistant.creator.createProjectCpp",
 				"title": "Create Cpp Project",
 				"category": "C&CPP Creator"
 			},
 			{
-				"command": "c_cpp.creator.createProjectC",
+				"command": "code_assistant.creator.createProjectC",
 				"title": "Create C Project",
 				"category": "C&CPP Creator"
 			},
 			{
-				"command": "c_cpp.creator.createPythonFile",
+				"command": "code_assistant.creator.createPrcreateProjectRustojectC",
+				"title": "Create Rust Project",
+				"category": "C&CPP Creator"
+			},
+			{
+				"command": "code_assistant.creator.createPythonFile",
 				"title": "Create Python File",
 				"category": "C&CPP Creator"
 			},
 			{
-				"command": "c_cpp.creator.createRustFile",
+				"command": "code_assistant.creator.createRustFile",
 				"title": "Create Rust File",
 				"category": "C&CPP Creator"
 			},
 			{
-				"command": "c_cpp.creator.createShellFile",
+				"command": "code_assistant.creator.createShellFile",
 				"title": "Create Shell File",
 				"category": "C&CPP Creator"
 			},
 			{
-				"command": "c_cpp.creator.createGoFile",
+				"command": "code_assistant.creator.createGoFile",
 				"title": "Create Go File",
 				"category": "C&CPP Creator"
 			},
 			{
-				"command": "c_cpp.creator.createCMakeFile",
+				"command": "code_assistant.creator.createCMakeFile",
 				"title": "Create CMake File",
 				"category": "C&CPP Creator"
 			},
 			{
-				"command": "c_cpp.creator.createRustMod",
+				"command": "code_assistant.creator.createRustMod",
 				"title": "Create Rust Mod",
+				"category": "C&CPP Creator"
+			},
+			{
+				"command": "code_assistant.creator.createPuml",
+				"title": "Create PlantUML",
 				"category": "C&CPP Creator"
 			}
 		],
 		"menus": {
 			"explorer/context": [
 				{
-					"submenu": "c_cpp.creator.file",
+					"submenu": "code_assistant.creator.file",
 					"group": "navigation"
 				},
 				{
-					"command": "c_cpp.creator.createProjectCpp",
+					"command": "code_assistant.creator.createProjectCpp",
 					"group": "navigation@100"
 				}
 			],
 			"file/newFile": [
 				{
-					"command": "c_cpp.creator.createProjectC"
+					"command": "code_assistant.creator.createProjectC"
 				},
 				{
-					"command": "c_cpp.creator.createProjectCpp"
+					"command": "code_assistant.creator.createProjectCpp"
 				},
 				{
-					"command": "c_cpp.creator.createSourceFile"
+					"command": "code_assistant.creator.createSourceFile"
 				},
 				{
-					"command": "c_cpp.creator.createHeaderFile"
+					"command": "code_assistant.creator.createHeaderFile"
 				},
 				{
-					"command": "c_cpp.creator.createClass"
+					"command": "code_assistant.creator.createClass"
 				},
 				{
-					"command": "c_cpp.creator.createMainForCpp"
+					"command": "code_assistant.creator.createMainForCpp"
 				},
 				{
-					"command": "c_cpp.creator.createMainForC"
+					"command": "code_assistant.creator.createMainForC"
 				},
 				{
-					"command": "c_cpp.creator.createPythonFile"
+					"command": "code_assistant.creator.createPythonFile"
 				},
 				{
-					"command": "c_cpp.creator.createRustFile"
+					"command": "code_assistant.creator.createRustFile"
 				},
 				{
-					"command": "c_cpp.creator.createShellFile"
+					"command": "code_assistant.creator.createShellFile"
 				},
 				{
-					"command": "c_cpp.creator.createGoFile"
+					"command": "code_assistant.creator.createGoFile"
 				},
 				{
-					"command": "c_cpp.creator.createCMakeFile"
+					"command": "code_assistant.creator.createCMakeFile"
 				},
 				{
-					"command": "c_cpp.creator.createRustMod"
+					"command": "code_assistant.creator.createRustMod"
 				},
 				{
-					"command": "c_cpp.creator.helloWorld"
+					"command": "code_assistant.creator.helloWorld"
 				}
 			],
-			"c_cpp.creator.file": [
+			"code_assistant.creator.file": [
 				{
-					"command": "c_cpp.creator.createProjectC"
+					"command": "code_assistant.creator.createProjectC"
 				},
 				{
-					"command": "c_cpp.creator.createProjectCpp"
+					"command": "code_assistant.creator.createProjectCpp"
 				},
 				{
-					"command": "c_cpp.creator.createSourceFile"
+					"command": "code_assistant.creator.createSourceFile"
 				},
 				{
-					"command": "c_cpp.creator.createHeaderFile"
+					"command": "code_assistant.creator.createHeaderFile"
 				},
 				{
-					"command": "c_cpp.creator.createClass"
+					"command": "code_assistant.creator.createClass"
 				},
 				{
-					"command": "c_cpp.creator.createMainForCpp"
+					"command": "code_assistant.creator.createMainForCpp"
 				},
 				{
-					"command": "c_cpp.creator.createMainForC"
+					"command": "code_assistant.creator.createMainForC"
 				},
 				{
-					"command": "c_cpp.creator.createPythonFile"
+					"command": "code_assistant.creator.createPythonFile"
 				},
 				{
-					"command": "c_cpp.creator.createRustFile"
+					"command": "code_assistant.creator.createRustFile"
 				},
 				{
-					"command": "c_cpp.creator.createShellFile"
+					"command": "code_assistant.creator.createShellFile"
 				},
 				{
-					"command": "c_cpp.creator.createGoFile"
+					"command": "code_assistant.creator.createGoFile"
 				},
 				{
-					"command": "c_cpp.creator.createCMakeFile"
+					"command": "code_assistant.creator.createCMakeFile"
 				},
 				{
-					"command": "c_cpp.creator.createRustMod"
+					"command": "code_assistant.creator.createRustMod"
 				},
 				{
-					"command": "c_cpp.creator.helloWorld"
+					"command": "code_assistant.creator.helloWorld"
 				}
 			]
 		},
 		"viewsWelcome": [
 			{
 				"view": "explorer",
-				"contents": "You can also [open a CMake project folder](command:_java.project.open), or create a new CMake project by clicking the button below.\n[Create CMake C Project](command:c_cpp.creator.createProjectC)\n[Create CMake Cpp Project](command:c_cpp.creator.createProjectCpp)",
+				"contents": "You can also [open a CMake project folder](command:_java.project.open), or create a new CMake project by clicking the button below.\n[Create CMake C Project](command:code_assistant.creator.createProjectC)\n[Create CMake Cpp Project](command:code_assistant.creator.createProjectCpp)",
+				"when": "workspaceFolderCount == 0"
+			},
+			{
+				"view": "explorer",
+				"contents": "You can also [open a Rust project folder](command:_java.project.open), or create a new Rust project by clicking the button below.\n[Create Rust Project](command:code_assistant.creator.createProjectRust)\n",
 				"when": "workspaceFolderCount == 0"
 			}
 		],
 		"submenus": [
 			{
-				"id": "c_cpp.creator.file",
+				"id": "code_assistant.creator.file",
 				"label": "New C & C++ ..."
 			}
 		],
@@ -244,92 +261,92 @@
 			{
 				"title": "C&C++ Creator",
 				"properties": {
-					"c_cpp.creator.template.class.h": {
+					"code_assistant.creator.template.class.h": {
 						"type": "string",
 						"default": "",
 						"description": "Class Header File Template Path."
 					},
-					"c_cpp.creator.template.class.cpp": {
+					"code_assistant.creator.template.class.cpp": {
 						"type": "string",
 						"default": "",
 						"description": "Class Source File Template Path."
 					},
-					"c_cpp.creator.template.header": {
+					"code_assistant.creator.template.header": {
 						"type": "string",
 						"default": "",
 						"description": "General Header File Template Path."
 					},
-					"c_cpp.creator.template.source": {
+					"code_assistant.creator.template.source": {
 						"type": "string",
 						"default": "",
 						"description": "General Source File Template Path."
 					},
-					"c_cpp.creator.template.class.filename.header": {
+					"code_assistant.creator.template.class.filename.header": {
 						"type": "string",
 						"default": "{{*CLASSNAME*}}.h",
 						"description": "Class Header Filename Template, default: {{*CLASSNAME*}}.h."
 					},
-					"c_cpp.creator.template.class.filename.source": {
+					"code_assistant.creator.template.class.filename.source": {
 						"type": "string",
 						"default": "{{*CLASSNAME*}}.cpp",
 						"description": "Class Source Filename Template, default: {{*CLASSNAME*}}.cpp."
 					},
-					"c_cpp.creator.template.license": {
+					"code_assistant.creator.template.license": {
 						"type": "string",
 						"default": "",
 						"description": "License Template Path."
 					},
-					"c_cpp.creator.template.username": {
+					"code_assistant.creator.template.username": {
 						"type": "string",
 						"default": "zouxiaoliang",
 						"description": "Your Name."
 					},
-					"c_cpp.creator.template.main.c": {
+					"code_assistant.creator.template.main.c": {
 						"type": "string",
 						"default": "",
 						"description": "General C Main File."
 					},
-					"c_cpp.creator.template.main.cpp": {
+					"code_assistant.creator.template.main.cpp": {
 						"type": "string",
 						"default": "",
 						"description": "General CPP Main File."
 					},
-					"c_cpp.creator.template.c.cmakelists.txt": {
+					"code_assistant.creator.template.c.cmakelists.txt": {
 						"type": "string",
 						"default": "",
 						"description": "General CMake C Project File."
 					},
-					"c_cpp.creator.template.cpp.cmakelists.txt": {
+					"code_assistant.creator.template.cpp.cmakelists.txt": {
 						"type": "string",
 						"default": "",
 						"description": "General CMake CPP Project File."
 					},
-					"c_cpp.creator.template.main.py": {
+					"code_assistant.creator.template.main.py": {
 						"type": "string",
 						"default": "",
 						"description": "General Python File."
 					},
-					"c_cpp.creator.template.main.rs": {
+					"code_assistant.creator.template.main.rs": {
 						"type": "string",
 						"default": "",
 						"description": "General Rust File."
 					},
-					"c_cpp.creator.default_project_path": {
+					"code_assistant.creator.default_project_path": {
 						"type": "string",
 						"default": "",
 						"description": "Default Project Path"
 					},
-					"c_cpp.creator.template.main.sh": {
+					"code_assistant.creator.template.main.sh": {
 						"type": "string",
 						"default": "",
 						"description": "General Shell File."
 					},
-					"c_cpp.creator.template.main.go": {
+					"code_assistant.creator.template.main.go": {
 						"type": "string",
 						"default": "",
 						"description": "General Go File."
 					},
-					"c_cpp.creator.template.main.cmakefile": {
+					"code_assistant.creator.template.main.cmakefile": {
 						"type": "string",
 						"default": "",
 						"description": "General CMake File."

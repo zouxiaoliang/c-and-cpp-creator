@@ -26,7 +26,7 @@ async function readInput(args: any): Promise<[string, string]> {
 export namespace v1 {
   export abstract class Commands {
     public static helloWorld(args: any) {
-      var path = vscode.extensions.getExtension('c_cpp.creator')?.extensionPath as
+      var path = vscode.extensions.getExtension('code_assistant.creator')?.extensionPath as
         unknown as string;
       if (path) {
         log('hello world, extension c & cpp file creator path: ' + path);
@@ -325,7 +325,7 @@ export namespace v1 {
 export namespace v2 {
   export abstract class Commands {
     public static helloWorld(args: any) {
-      var path = vscode.extensions.getExtension('c_cpp.creator')?.extensionPath as
+      var path = vscode.extensions.getExtension('code_assistant.creator')?.extensionPath as
         unknown as string;
       if (path) {
         log('hello world, extension c & cpp file creator path: ' + path);
@@ -336,8 +336,9 @@ export namespace v2 {
 
     public static async createHeaderFile(args: any) {
       var [dirname, filename] = await readInput(args);
+      filename = filename.trim();
       if (!filename || !filename.length) {
-        log('can\'t create header file from c & cpp file creator, filename invalid.');
+        log('create header file failed, filename invalid.');
         return;
       }
       if (!filename.endsWith('.h') && !filename.endsWith('hpp')) {
@@ -374,17 +375,18 @@ export namespace v2 {
       ];
       fs.writeFile(filepath, _render.render(dirname, "", filename, tokens), function (err) {
         if (err) {
-          log('can\'t create header file from c & cpp file creator, what: ' + err);
+          log('create header file failed, what: ' + err);
         } else {
-          log('create header file ' + filename + ' from c & cpp file creator');
+          log('create header file ' + filename + ' success');
         }
       });
     }
 
     public static async createSourceFile(args: any) {
       var [dirname, filename] = await readInput(args);
+      filename = filename.trim();
       if (!filename) {
-        log('can\'t create source file from c & cpp file creator, filename is empty.');
+        log('create source file failed, filename is empty.');
         return;
       }
       if (!filename.endsWith('.c') && !filename.endsWith('.cpp') && !filename.endsWith('.cc')) {
@@ -402,9 +404,9 @@ export namespace v2 {
 
       fs.writeFile(filepath, _render.render(dirname, "", filename), function (err) {
         if (err) {
-          log('can\'t create source file from c & cpp file creator, what: ' + err);
+          log('create source file failed, what: ' + err);
         } else {
-          log('create source file ' + filename + ' from c & cpp file creator');
+          log('create source file ' + filename + ' success');
         }
       });
     }
@@ -495,14 +497,15 @@ export namespace v2 {
 
     public static async createClass(args: any) {
       var [dirname, classname] = await readInput(args);
+      classname = classname.trim();
       if (!classname) {
-        log('can\'t create class from c & cpp file creator, class name is empty.');
+        log('create c++ class failed, class name is empty.');
         return;
       }
 
       // 类名有效性检车
       if (!clazz_helper.isValid(classname)) {
-        log('can\'t create class ' + classname + ' from c & cpp file creator, class name is invalid.');
+        log('create c++ class ' + classname + ' failed, class name is invalid.');
         return;
       }
 
@@ -538,27 +541,28 @@ export namespace v2 {
       var result = true;
       fs.writeFile(headerFilename, clazzHeaderRender.render(dirname, "", classname, tokens), function (err) {
         if (!err) {
-          log('create class ' + classname + ' from c & cpp file creator');
+          log('create class header file' + classname + ' failed, what: ' + err);
           result = false;
         }
       });
 
       fs.writeFile(sourceFilename, clazzSourceRender.render(dirname, "", classname, tokens), function (err) {
         if (!err) {
-          log('create class ' + classname + ' from c & cpp file creator');
+          log('create class source file' + classname + ' failed, what: ' + err);
           result = false;
         }
       });
 
       if (result) {
-        log('create class ' + classname + ' from c & cpp file creator, path: ' + dirname);
+        log('create class ' + classname + ' success, class in dir: ' + dirname);
       }
     }
 
     public static async createMainForC(args: any) {
       var [dirname, filename] = await readInput(args);
+      filename = filename.trim();
       if (!filename) {
-        log('can\'t create source file from c & cpp file creator, filename is empty.');
+        log('create c main file failed, filename is empty.');
         return;
       }
       if (!filename.endsWith('.c')) {
@@ -576,17 +580,18 @@ export namespace v2 {
 
       fs.writeFile(filepath, _render.render(dirname, "", filename), function (err) {
         if (err) {
-          log('can\'t create source file from c & cpp file creator, what: ' + err);
+          log('create c main file failed, what: ' + err);
         } else {
-          log('create source file ' + filename + ' from c & cpp file creator');
+          log('create c main file ' + filename + ' success');
         }
       });
     }
 
     public static async createMainForCpp(args: any) {
       var [dirname, filename] = await readInput(args);
+      filename = filename.trim();
       if (!filename) {
-        log('can\'t create source file from c & cpp file creator, filename is empty.');
+        log('create c++ main file failed, filename is empty.');
         return;
       }
       if (!filename.endsWith('.cpp') && !filename.endsWith('.cc')) {
@@ -604,9 +609,9 @@ export namespace v2 {
 
       fs.writeFile(filepath, _render.render(dirname, "", filename), function (err) {
         if (err) {
-          log('can\'t create source file from c & cpp file creator, what: ' + err);
+          log('create c++ main file failed, what: ' + err);
         } else {
-          log('create source file ' + filename + ' from c & cpp file creator');
+          log('create c++ main file ' + filename + ' success.');
         }
       });
     }
@@ -633,10 +638,10 @@ export namespace v2 {
         uri = vscode.workspace.workspaceFolders[0].uri;
       }
 
-      let projectName = await vscode_helper.inputProjectName();
+      let projectName = (await vscode_helper.inputProjectName() as unknown as string).trim();
 
       if (!projectName) {
-        log('can\'t create cpp project, project name is empty.');
+        log('create cpp project failed, project name is empty.');
         return [null, null];
       }
 
@@ -685,7 +690,7 @@ export namespace v2 {
       }
 
       let uri = _uri as unknown as vscode.Uri;
-      let projectName = _projectName as unknown as string;
+      let projectName = (_projectName as unknown as string).trim();
       let projectPath = path.join(uri.path, projectName);
 
       // create director
@@ -703,9 +708,9 @@ export namespace v2 {
 
       fs.writeFile(path.join(projectPath, "CMakeLists.txt"), cmakefile.render("", projectName), function (err) {
         if (err) {
-          log('can\'t create cmake file from c & cpp file creator, what: ' + err);
+          log('create cmake file failed, what: ' + err);
         } else {
-          log('create cmake file from c & cpp file creator');
+          log('create cmake file success.');
         }
       });
 
@@ -717,9 +722,9 @@ export namespace v2 {
       );
       fs.writeFile(path.join(projectPath, "main.c"), c.render("", projectName), function (err) {
         if (err) {
-          log('can\'t create source file from c & cpp file creator, what: ' + err);
+          log('create c main file failed, what: ' + err);
         } else {
-          log('create source file main.cpp from c & cpp file creator');
+          log('create c main file success.');
         }
       });
 
@@ -733,8 +738,8 @@ export namespace v2 {
       }
 
       let uri = _uri as unknown as vscode.Uri;
-      let projectName = _projectName as unknown as string;
-      let projectPath = path.join(uri.path, projectName);
+      let projectName = (_projectName as unknown as string).trim();
+      let projectPath = path.join(uri.path, projectName.trim());
 
       // create director
       this.mkdir(projectPath);
@@ -748,9 +753,9 @@ export namespace v2 {
 
       fs.writeFile(path.join(projectPath, "CMakeLists.txt"), cmakefile.render("", projectName), function (err) {
         if (err) {
-          log('can\'t create cmake file from c & cpp file creator, what: ' + err);
+          log('create cmake file failed, what: ' + err);
         } else {
-          log('create cmake file from c & cpp file creator');
+          log('create cmake file success.');
         }
       });
 
@@ -762,21 +767,27 @@ export namespace v2 {
       );
       fs.writeFile(path.join(projectPath, "main.cpp"), cpp.render(), function (err) {
         if (err) {
-          log('can\'t create source file from c & cpp file creator, what: ' + err);
+          log('create c++ main file failed, what: ' + err);
         } else {
-          log('create source file main.cpp from c & cpp file creator');
+          log('create c++ main file success.');
         }
       });
 
       await this.openNewWorkspace(projectPath);
     }
 
+    public static async createProjectRust(args: any) {
+      // TODO: cargo new <project name>
+    }
+
     public static async createPythonFile(args: any) {
       var [dirname, filename] = await readInput(args);
+      filename = filename.trim();
       if (!filename) {
-        log('can\'t create source file from c & cpp file creator, filename is empty.');
+        log('create python file failed, filename is empty.');
         return;
       }
+
       if (!filename.endsWith('.py')) {
         filename += '.py';
       }
@@ -792,17 +803,18 @@ export namespace v2 {
 
       fs.writeFile(filepath, _render.render(dirname, "", filename), function (err) {
         if (err) {
-          log('can\'t create python file from c & cpp file creator, what: ' + err);
+          log('create python file failed, what: ' + err);
         } else {
-          log('create python file ' + filename + ' from c & cpp file creator');
+          log('create python file ' + filename + ' success.');
         }
       });
     }
 
     public static async createRustFile(args: any) {
       var [dirname, filename] = await readInput(args);
+      filename = filename.trim();
       if (!filename) {
-        log('can\'t create source file from c & cpp file creator, filename is empty.');
+        log('create rust file failed, filename is empty.');
         return;
       }
       if (!filename.endsWith('.rs')) {
@@ -820,17 +832,18 @@ export namespace v2 {
 
       fs.writeFile(filepath, _render.render(dirname, "", filename), function (err) {
         if (err) {
-          log('can\'t create rust file from c & cpp file creator, what: ' + err);
+          log('create rust file failed, what: ' + err);
         } else {
-          log('create rust file ' + filename + ' from c & cpp file creator');
+          log('create rust file ' + filename + ' success');
         }
       });
     }
 
     public static async createShellFile(args: any) {
       var [dirname, filename] = await readInput(args);
+      filename = filename.trim();
       if (!filename) {
-        log('can\'t create source file from c & cpp file creator, filename is empty.');
+        log('create shell file failed, filename is empty.');
         return;
       }
       if (!filename.endsWith('.sh')) {
@@ -848,17 +861,18 @@ export namespace v2 {
 
       fs.writeFile(filepath, _render.render(dirname, "", filename), function (err) {
         if (err) {
-          log('can\'t create rust file from c & cpp file creator, what: ' + err);
+          log('create shell file failed, what: ' + err);
         } else {
-          log('create rust file ' + filename + ' from c & cpp file creator');
+          log('create shell file ' + filename + ' success');
         }
       });
     }
 
     public static async createGoFile(args: any) {
       var [dirname, filename] = await readInput(args);
+      filename = filename.trim();
       if (!filename) {
-        log('can\'t create source file from c & cpp file creator, filename is empty.');
+        log('create go file failed, filename is empty.');
         return;
       }
       if (!filename.endsWith('.go')) {
@@ -876,9 +890,9 @@ export namespace v2 {
 
       fs.writeFile(filepath, _render.render(dirname, "", filename), function (err) {
         if (err) {
-          log('can\'t create go file from c & cpp file creator, what: ' + err);
+          log('create go file failed, what: ' + err);
         } else {
-          log('create go file ' + filename + ' from c & cpp file creator');
+          log('create go file ' + filename + ' success.');
         }
       });
     }
@@ -899,17 +913,18 @@ export namespace v2 {
 
       fs.writeFile(filepath, _render.render(dirname, projectName, filename), function (err) {
         if (err) {
-          log('can\'t create shell file from c & cpp file creator, what: ' + err);
+          log('create CMakeList.txt failed, what: ' + err);
         } else {
-          log('create shell file ' + filename + ' from c & cpp file creator');
+          log('create CMakeList.txt in path ' + projectName);
         }
       });
     }
 
     public static async createRustMod(args: any) {
       var [dirname, filename] = await readInput(args);
+      filename = filename.trim();
       if (!filename) {
-        log('can\'t create rust mod from c & cpp file creator, filename is empty.');
+        log('create rust mod failed, filename is empty.');
         return;
       }
 
@@ -926,9 +941,38 @@ export namespace v2 {
 
       fs.writeFile(filepath, _render.render(modName, "", filename), function (err) {
         if (err) {
-          log('can\'t create rust file from c & cpp file creator, what: ' + err);
+          log('create rust mod failed, what: ' + err);
         } else {
-          log('create rust file ' + filename + ' from c & cpp file creator');
+          log('create rust mod ' + filename + ' success.');
+        }
+      });
+    }
+
+    public static async createPlantUML(args: any) {
+      var [dirname, filename] = await readInput(args);
+      filename = filename.trim();
+      if (!filename) {
+        log('create plant uml file failed, filename is empty.');
+        return;
+      }
+      if (!filename.endsWith('.puml')) {
+        filename += '.puml';
+      }
+
+      var filepath = path.join(dirname, filename);
+
+      // 创建文件模版
+      var _render = new CodeRender(
+        configs.instance().username(),
+        configs.instance().licenseTemplate(),
+        configs.instance().plantumlTemplate()
+      );
+
+      fs.writeFile(filepath, _render.render(dirname, "", filename), function (err) {
+        if (err) {
+          log('create plant uml file failed, what: ' + err);
+        } else {
+          log('create plant uml file ' + filename + ' success');
         }
       });
     }

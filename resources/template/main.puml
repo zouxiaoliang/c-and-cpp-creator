@@ -1,0 +1,11 @@
+@startuml main
+start
+:hello, world!!!;
+if (condition?) then (success)
+    :process success.;
+else(failed)
+    :process failed.;
+    :hello world;
+endif
+end
+@enduml
